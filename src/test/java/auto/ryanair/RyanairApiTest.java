@@ -3,14 +3,13 @@ package auto.ryanair;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import org.junit.Test;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
-public class LoginTest {
+public class RyanairApiTest {
     @Test
     public void loginTest() {
         JsonPath loginResponse = given().

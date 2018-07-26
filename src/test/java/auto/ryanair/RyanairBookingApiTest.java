@@ -1,94 +1,60 @@
 package auto.ryanair;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import org.junit.Test;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 
-public class RyanairApiTest {
+public class RyanairBookingApiTest {
     @Test
     public void loginTest() {
-        JsonPath loginResponse = given().
-                contentType(ContentType.URLENC).
-                param("username", "zyclonc@gmail.com").
-                param("password", "123ZZror").
-                param("rememberme", "false").
-                param("policyAgreed", "null").
+        String timeStamp = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+        ObjectMapper oMapper = new ObjectMapper();
+
+        LoginRequestDto loginBody = new LoginRequestDto("zyclonc@gmail.com", "123ZZror", "false", "null");
+        Map<String, Object> loginDataMap = oMapper.convertValue(loginBody, Map.class);
+
+        JsonPath loginResponse = given().contentType(ContentType.URLENC).
+                formParams(loginDataMap).
                 when().
                 post("https://api.ryanair.com/userprofile/rest/api/v1/login").
                 then().
                 contentType(ContentType.JSON).
                 statusCode(200).
                 extract().response().andReturn().jsonPath();
-
         System.out.println("customerId: " + loginResponse.getString("customerId"));
         System.out.println("token: " + loginResponse.getString("token"));
-    }
 
-    @Test
-    public void flightOutDatesTest() {
-        String timeStamp = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+        OutboundDatesRequestDto outboundDatesBody = new OutboundDatesRequestDto("KRK",
+                "false", "false", "17", "LWO", timeStamp);
+        Map<String, Object> loginOutboundDatesMap = oMapper.convertValue(outboundDatesBody, Map.class);
 
         JsonPath response = given().
-                pathParam("destination", "KRK").
-                pathParam("includeConnectingFlights", "false").
-                pathParam("isTwoWay", "false").
-                pathParam("months", "17").
-                pathParam("origin", "LWO").
-                pathParam("startDate", timeStamp).
+                pathParams(loginOutboundDatesMap).
                 when().
                 get("https://desktopapps.ryanair.com/v4/" +
                         "Calendar?Destination={destination}&IncludeConnectingFlights={includeConnectingFlights}" +
                         "&IsTwoWay={isTwoWay}&Months={months}&Origin={origin}&StartDate={startDate}").
                 then().contentType(ContentType.JSON).
                 statusCode(200).extract().response().andReturn().jsonPath();
-
         List<String> outboundDates = response.get("outboundDates");
-        System.out.println("First available flight date: " + outboundDates.get(0));
-    }
+        System.out.format("First available flight date for flight %s - %s is: %s\n", outboundDatesBody.getOrigin(),
+                outboundDatesBody.getDestination(), outboundDates.get(0));
 
-    @Test
-    public void priceTest() {
-        String timeStamp = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
-
-        JsonPath dateResponse = given().
-                pathParam("destination", "KRK").
-                pathParam("includeConnectingFlights", "false").
-                pathParam("isTwoWay", "false").
-                pathParam("months", "17").
-                pathParam("origin", "LWO").
-                pathParam("startDate", timeStamp).
-                when().
-                get("https://desktopapps.ryanair.com/v4/" +
-                        "Calendar?" +
-                        "Destination={destination}" +
-                        "&IncludeConnectingFlights={includeConnectingFlights}" +
-                        "&IsTwoWay={isTwoWay}" +
-                        "&Months={months}&Origin={origin}" +
-                        "&StartDate={startDate}").
-                then().contentType(ContentType.JSON).
-                statusCode(200).extract().response().andReturn().jsonPath();
-
-        List<String> outboundDates = dateResponse.get("outboundDates");
+        PricesRequestDto pricesRequestBody = new PricesRequestDto("1", "0", outboundDates.get(0),
+                "KRK", "1", "0", "true", "LWO",
+                "false", "0", "AGREED", "false", "");
+        Map<String, Object> pricesRequestMap = oMapper.convertValue(pricesRequestBody, Map.class);
 
         JsonPath priceResponse = given().
-                pathParam("adt", "1").
-                pathParam("chd", "0").
-                pathParam("dateOut", outboundDates.get(0)).
-                pathParam("destination", "KRK").
-                pathParam("flexDaysOut", "1").
-                pathParam("inf", "0").
-                pathParam("includeConnectingFlights", "true").
-                pathParam("origin", "LWO").
-                pathParam("roundTrip", "false").
-                pathParam("teen", "0").
-                pathParam("toUs", "AGREED").
-                pathParam("exists", "false").
-                pathParam("promoCode", "").
+                pathParams(pricesRequestMap).
                 when().
                 get("https://desktopapps.ryanair.com/v4/en-ie/" +
                         "availability?" +

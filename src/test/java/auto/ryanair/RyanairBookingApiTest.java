@@ -3,6 +3,7 @@ package auto.ryanair;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
@@ -78,11 +79,43 @@ public class RyanairBookingApiTest {
         String priceForClosestDate = priceResponse.getString("trips.dates.flights.regularFare.fares.amount").
                 replace("[", "").replace("]", "").replace(",", "")
                 .replaceAll("\\s+", "");
+
         String flightNumber = priceResponse.getString("trips.dates.flights.segments.flightNumber").
                 replace("[", "").replace("]", "").replace(",", "")
                 .replaceAll("\\s+", "");
 
+        String outboundFareKeyRaw = priceResponse.getString("trips.dates.flights.regularFare.fareKey").
+                replace("[", "").replace("]", "");
+
+        String outboundFlightKeyRaw = priceResponse.getString("trips.dates.flights.flightKey").
+                replace("[", "").replace("]", "").replace(",", "").
+                replace(" ", "+").replace("/", "%2F");
+
+        String outboundFareKey = StringUtils.chop(outboundFlightKeyRaw);
+        String outboundFlightKey = StringUtils.chop(outboundFlightKeyRaw);
+
         System.out.println("Price for first available date: " + priceForClosestDate);
         System.out.println("Flight number: " + flightNumber);
+        System.out.println("fareKey: " + outboundFareKey);
+        System.out.println("outboundFlightKey: " + outboundFlightKey);
+
+        FareOptionsRequestDto fareOptionsBody = new FareOptionsRequestDto("1", "0",
+                "0", "0", outboundFareKey, outboundFlightKey);
+        Map<String, Object> fareOptionsMap = oMapper.convertValue(fareOptionsBody, Map.class);
+
+        JsonPath fareOptionsResponse = given().
+                pathParams(fareOptionsMap).
+                when().
+                get("https://desktopapps.ryanair.com/v4/en-ie/" +
+                        "FareOptions?" +
+                        "AdultsCount={adultsCount}" +
+                        "&ChildrenCount={childrenCount}" +
+                        "&InfantCount={infantCount}" +
+                        "&TeensCount={teensCount}" +
+                        "&outboundFareKey={outboundFareKey}" +
+                        "&outboundFlightKey={outboundFlightKey}").
+                then().contentType(ContentType.JSON).
+                statusCode(200).
+                extract().response().andReturn().jsonPath();
     }
 }

@@ -9,7 +9,7 @@ public class LoginRequestDto {
     public LoginRequestDto() {
     }
 
-    LoginRequestDto(String username, String password, String rememberme, String policyAgreed) {
+    public LoginRequestDto(String username, String password, String rememberme, String policyAgreed) {
         this.username = username;
         this.password = password;
         this.policyAgreed = policyAgreed;

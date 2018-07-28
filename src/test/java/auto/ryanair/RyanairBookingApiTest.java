@@ -80,10 +80,10 @@ public class RyanairBookingApiTest {
                 removeBracketsOnly(priceResponse.getString("trips.dates.flights.flightKey"));
         String outboundFlightKey = StringUtils.chop(outboundFlightKeyRaw);
 
-        System.out.println("Price for first available date:" + priceForClosestDate);
-        System.out.println("Flight number:" + flightNumber);
-        System.out.println("fareKey:" + outboundFareKey);
-        System.out.println("outboundFlightKey:" + outboundFlightKey);
+        System.out.println("Price for first available date: " + priceForClosestDate);
+        System.out.println("Flight number: " + flightNumber);
+        System.out.println("fareKey: " + outboundFareKey);
+        System.out.println("outboundFlightKey: " + outboundFlightKey);
 
         FareOptionsRequestDto fareOptionsBody = new FareOptionsRequestDto("1", "0",
                 "0", "0", outboundFareKey, outboundFlightKey);

@@ -1,4 +1,4 @@
-package auto.ryanair;
+package auto.ryanair.dto;
 
 public class PricesRequestDto {
     private String adt;
@@ -18,7 +18,7 @@ public class PricesRequestDto {
     public PricesRequestDto() {
     }
 
-    PricesRequestDto(String adt, String chd, String dateOut, String destination, String flexDaysOut,
+    public PricesRequestDto(String adt, String chd, String dateOut, String destination, String flexDaysOut,
                             String inf, String includeConnectingFlights, String origin, String roundTrip,
                             String teen, String toUs, String exists, String promoCode) {
         this.adt = adt;

@@ -1,4 +1,4 @@
-package auto.ryanair;
+package auto.ryanair.dto;
 
 public class FareOptionsRequestDto {
     private String adultsCount;

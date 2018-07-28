@@ -1,5 +1,11 @@
 package auto.ryanair;
 
+import auto.ryanair.dto.FareOptionsRequestDto;
+import auto.ryanair.dto.LoginRequestDto;
+import auto.ryanair.dto.OutboundDatesRequestDto;
+import auto.ryanair.dto.PricesRequestDto;
+import auto.ryanair.urlDefinitions.UrlDefinitions;
+import auto.ryanair.usils.RedundantCharacterRemoveUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
@@ -19,13 +25,14 @@ public class RyanairBookingApiTest {
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
         ObjectMapper oMapper = new ObjectMapper();
 
-        LoginRequestDto loginBody = new LoginRequestDto("zyclonc@gmail.com", "123ZZror", "false", "null");
+        LoginRequestDto loginBody = new LoginRequestDto("zyclonc@gmail.com",
+                "123ZZror", "false", "null");
         Map<String, Object> loginDataMap = oMapper.convertValue(loginBody, Map.class);
 
         JsonPath loginResponse = given().contentType(ContentType.URLENC).
                 formParams(loginDataMap).
                 when().
-                post("https://api.ryanair.com/userprofile/rest/api/v1/login").
+                post(UrlDefinitions.loginUrl).
                 then().
                 contentType(ContentType.JSON).
                 statusCode(200).
@@ -40,9 +47,7 @@ public class RyanairBookingApiTest {
         JsonPath response = given().
                 pathParams(loginOutboundDatesMap).
                 when().
-                get("https://desktopapps.ryanair.com/v4/" +
-                        "Calendar?Destination={destination}&IncludeConnectingFlights={includeConnectingFlights}" +
-                        "&IsTwoWay={isTwoWay}&Months={months}&Origin={origin}&StartDate={startDate}").
+                get(UrlDefinitions.outboundDatesUrl).
                 then().contentType(ContentType.JSON).
                 statusCode(200).extract().response().andReturn().jsonPath();
         List<String> outboundDates = response.get("outboundDates");
@@ -57,63 +62,37 @@ public class RyanairBookingApiTest {
         JsonPath priceResponse = given().
                 pathParams(pricesRequestMap).
                 when().
-                get("https://desktopapps.ryanair.com/v4/en-ie/" +
-                        "availability?" +
-                        "ADT={adt}" +
-                        "&CHD={chd}" +
-                        "&DateOut={dateOut}" +
-                        "&Destination={destination}" +
-                        "&FlexDaysOut={flexDaysOut}" +
-                        "&INF={inf}" +
-                        "&IncludeConnectingFlights={includeConnectingFlights}" +
-                        "&Origin={origin}" +
-                        "&RoundTrip={roundTrip}" +
-                        "&TEEN={teen}" +
-                        "&ToUs={toUs}" +
-                        "&exists={exists}" +
-                        "&promoCode={promoCode}").
+                get(UrlDefinitions.pricesRequestUrl).
                 then().contentType(ContentType.JSON).
                 statusCode(200).
                 extract().response().andReturn().jsonPath();
 
-        String priceForClosestDate = priceResponse.getString("trips.dates.flights.regularFare.fares.amount").
-                replace("[", "").replace("]", "").replace(",", "")
-                .replaceAll("\\s+", "");
+        String priceForClosestDate = RedundantCharacterRemoveUtility.
+                removeSpacesBracketsComas(priceResponse.getString("trips.dates.flights.regularFare.fares.amount"));
 
-        String flightNumber = priceResponse.getString("trips.dates.flights.segments.flightNumber").
-                replace("[", "").replace("]", "").replace(",", "")
-                .replaceAll("\\s+", "");
+        String flightNumber = RedundantCharacterRemoveUtility.
+                removeSpacesBracketsComas(priceResponse.getString("trips.dates.flights.segments.flightNumber"));
 
-        String outboundFareKeyRaw = priceResponse.getString("trips.dates.flights.regularFare.fareKey").
-                replace("[", "").replace("]", "");
+        String outboundFareKey = RedundantCharacterRemoveUtility.
+                removeSpacesBracketsComas(priceResponse.getString("trips.dates.flights.regularFare.fareKey"));
 
-        String outboundFlightKeyRaw = priceResponse.getString("trips.dates.flights.flightKey").
-                replace("[", "").replace("]", "").replace(",", "").
-                replace(" ", "+").replace("/", "%2F");
-
-        String outboundFareKey = StringUtils.chop(outboundFlightKeyRaw);
+        String outboundFlightKeyRaw = RedundantCharacterRemoveUtility.
+                removeBracketsOnly(priceResponse.getString("trips.dates.flights.flightKey"));
         String outboundFlightKey = StringUtils.chop(outboundFlightKeyRaw);
 
-        System.out.println("Price for first available date: " + priceForClosestDate);
-        System.out.println("Flight number: " + flightNumber);
-        System.out.println("fareKey: " + outboundFareKey);
-        System.out.println("outboundFlightKey: " + outboundFlightKey);
+        System.out.println("Price for first available date:" + priceForClosestDate);
+        System.out.println("Flight number:" + flightNumber);
+        System.out.println("fareKey:" + outboundFareKey);
+        System.out.println("outboundFlightKey:" + outboundFlightKey);
 
         FareOptionsRequestDto fareOptionsBody = new FareOptionsRequestDto("1", "0",
                 "0", "0", outboundFareKey, outboundFlightKey);
         Map<String, Object> fareOptionsMap = oMapper.convertValue(fareOptionsBody, Map.class);
 
-        JsonPath fareOptionsResponse = given().
+        JsonPath fareOptionsResponse = given().contentType(ContentType.JSON).
                 pathParams(fareOptionsMap).
                 when().
-                get("https://desktopapps.ryanair.com/v4/en-ie/" +
-                        "FareOptions?" +
-                        "AdultsCount={adultsCount}" +
-                        "&ChildrenCount={childrenCount}" +
-                        "&InfantCount={infantCount}" +
-                        "&TeensCount={teensCount}" +
-                        "&outboundFareKey={outboundFareKey}" +
-                        "&outboundFlightKey={outboundFlightKey}").
+                get(UrlDefinitions.fareOptionsUrl).
                 then().contentType(ContentType.JSON).
                 statusCode(200).
                 extract().response().andReturn().jsonPath();

@@ -1,4 +1,4 @@
-package auto.ryanair;
+package auto.ryanair.dto;
 
 public class OutboundDatesRequestDto {
     private String destination;
@@ -11,7 +11,7 @@ public class OutboundDatesRequestDto {
     public OutboundDatesRequestDto() {
     }
 
-    OutboundDatesRequestDto(String destination, String includeConnectingFlights, String isTwoWay, String months, String origin, String startDate) {
+    public OutboundDatesRequestDto(String destination, String includeConnectingFlights, String isTwoWay, String months, String origin, String startDate) {
         this.destination = destination;
         this.includeConnectingFlights = includeConnectingFlights;
         this.isTwoWay = isTwoWay;

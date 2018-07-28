@@ -20,11 +20,11 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 
 public class RyanairBookingApiTest {
+    String timeStamp = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+    ObjectMapper oMapper = new ObjectMapper();
+
     @Test
     public void loginTest() {
-        String timeStamp = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
-        ObjectMapper oMapper = new ObjectMapper();
-
         LoginRequestDto loginBody = new LoginRequestDto("zyclonc@gmail.com",
                 "123ZZror", "false", "null");
         Map<String, Object> loginDataMap = oMapper.convertValue(loginBody, Map.class);

@@ -1,26 +1,26 @@
 package auto.ryanair.dto;
 
-public class PricesRequestDto {
-    private String adt;
-    private String chd;
+public class AvailabilityRequestDto {
+    private int adt;
+    private int chd;
     private String dateOut;
     private String destination;
     private String flexDaysOut;
-    private String inf;
+    private int inf;
     private String includeConnectingFlights;
     private String origin;
     private String roundTrip;
-    private String teen;
+    private int teen;
     private String toUs;
     private String exists;
     private String promoCode;
 
-    public PricesRequestDto() {
+    public AvailabilityRequestDto() {
     }
 
-    public PricesRequestDto(String adt, String chd, String dateOut, String destination, String flexDaysOut,
-                            String inf, String includeConnectingFlights, String origin, String roundTrip,
-                            String teen, String toUs, String exists, String promoCode) {
+    public AvailabilityRequestDto(int adt, int chd, String dateOut, String destination, String flexDaysOut,
+                                  int inf, String includeConnectingFlights, String origin, String roundTrip,
+                                  int teen, String toUs, String exists, String promoCode) {
         this.adt = adt;
         this.chd = chd;
         this.dateOut = dateOut;
@@ -40,7 +40,7 @@ public class PricesRequestDto {
         return destination;
     }
 
-    public String getInf() {
+    public int getInf() {
         return inf;
     }
 
@@ -48,7 +48,7 @@ public class PricesRequestDto {
         return origin;
     }
 
-    public String getAdt() {
+    public int getAdt() {
         return adt;
     }
 
@@ -56,7 +56,7 @@ public class PricesRequestDto {
         return includeConnectingFlights;
     }
 
-    public String getChd() {
+    public int getChd() {
         return chd;
     }
 
@@ -80,7 +80,7 @@ public class PricesRequestDto {
         return roundTrip;
     }
 
-    public String getTeen() {
+    public int getTeen() {
         return teen;
     }
 
@@ -100,11 +100,11 @@ public class PricesRequestDto {
         this.destination = destination;
     }
 
-    public void setAdt(String adt) {
+    public void setAdt(int adt) {
         this.adt = adt;
     }
 
-    public void setChd(String chd) {
+    public void setChd(int chd) {
         this.chd = chd;
     }
 
@@ -120,7 +120,7 @@ public class PricesRequestDto {
         this.flexDaysOut = flexDaysOut;
     }
 
-    public void setInf(String inf) {
+    public void setInf(int inf) {
         this.inf = inf;
     }
 
@@ -132,7 +132,7 @@ public class PricesRequestDto {
         this.roundTrip = roundTrip;
     }
 
-    public void setTeen(String teen) {
+    public void setTeen(int teen) {
         this.teen = teen;
     }
 

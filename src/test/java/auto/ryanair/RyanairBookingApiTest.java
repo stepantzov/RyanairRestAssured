@@ -9,6 +9,7 @@ import auto.ryanair.usils.RedundantCharacterRemoveUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
@@ -29,28 +30,47 @@ public class RyanairBookingApiTest {
                 "123ZZror", "false", "null");
         Map<String, Object> loginDataMap = oMapper.convertValue(loginBody, Map.class);
 
-        JsonPath loginResponse = given().contentType(ContentType.URLENC).
+        Response loginResponse = given().
+                contentType(ContentType.URLENC).
                 formParams(loginDataMap).
                 when().
                 post(UrlDefinitions.loginUrl).
                 then().
                 contentType(ContentType.JSON).
                 statusCode(200).
-                extract().response().andReturn().jsonPath();
-        System.out.println("customerId: " + loginResponse.getString("customerId"));
-        System.out.println("token: " + loginResponse.getString("token"));
+                extract().response();
+
+        Map<String, String> loginResponseCookies = loginResponse.getCookies();
+        JsonPath loginResponseJsonPath = loginResponse.jsonPath();
+        System.out.println("customerId: " + loginResponseJsonPath.getString("customerId"));
+        System.out.println("token: " + loginResponseJsonPath.getString("token"));
+
+        Response loggedInResponse = given().
+                contentType(ContentType.JSON).
+                header("X-AUTH-TOKEN", loginResponseJsonPath.getString("token")).
+                cookies(loginResponseCookies).
+                when().
+                get(UrlDefinitions.loggedInUrl).
+                then().
+                contentType(ContentType.JSON).
+                statusCode(200).
+                extract().
+                response();
 
         OutboundDatesRequestDto outboundDatesBody = new OutboundDatesRequestDto("KRK",
                 "false", "false", "17", "LWO", timeStamp);
         Map<String, Object> loginOutboundDatesMap = oMapper.convertValue(outboundDatesBody, Map.class);
 
-        JsonPath response = given().
+        Response outboundDatesResponse = given().
                 pathParams(loginOutboundDatesMap).
+                cookies(loginResponseCookies).
                 when().
                 get(UrlDefinitions.outboundDatesUrl).
                 then().contentType(ContentType.JSON).
-                statusCode(200).extract().response().andReturn().jsonPath();
-        List<String> outboundDates = response.get("outboundDates");
+                statusCode(200).extract().response();
+
+        JsonPath outboundDatesJsonPath = outboundDatesResponse.jsonPath();
+        List<String> outboundDates = outboundDatesJsonPath.get("outboundDates");
         System.out.format("First available flight date for flight %s - %s is: %s\n", outboundDatesBody.getOrigin(),
                 outboundDatesBody.getDestination(), outboundDates.get(0));
 
@@ -59,25 +79,25 @@ public class RyanairBookingApiTest {
                 "false", "0", "AGREED", "false", "");
         Map<String, Object> pricesRequestMap = oMapper.convertValue(pricesRequestBody, Map.class);
 
-        JsonPath priceResponse = given().
+        Response availabilityResponse = given().
                 pathParams(pricesRequestMap).
                 when().
-                get(UrlDefinitions.pricesRequestUrl).
+                get(UrlDefinitions.availabilityRequestUrl).
                 then().contentType(ContentType.JSON).
                 statusCode(200).
-                extract().response().andReturn().jsonPath();
+                extract().response();
+
+        JsonPath availabilityResponseJsonPath = availabilityResponse.jsonPath();
+        Map<String, String> availabilityResponseCookie = availabilityResponse.getCookies();
 
         String priceForClosestDate = RedundantCharacterRemoveUtility.
-                removeSpacesBracketsComas(priceResponse.getString("trips.dates.flights.regularFare.fares.amount"));
-
+                removeSpacesBracketsComas(availabilityResponseJsonPath.getString("trips.dates.flights.regularFare.fares.amount"));
         String flightNumber = RedundantCharacterRemoveUtility.
-                removeSpacesBracketsComas(priceResponse.getString("trips.dates.flights.segments.flightNumber"));
-
+                removeSpacesBracketsComas(availabilityResponseJsonPath.getString("trips.dates.flights.segments.flightNumber"));
         String outboundFareKey = RedundantCharacterRemoveUtility.
-                removeSpacesBracketsComas(priceResponse.getString("trips.dates.flights.regularFare.fareKey"));
-
+                removeSpacesBracketsComas(availabilityResponseJsonPath.getString("trips.dates.flights.regularFare.fareKey"));
         String outboundFlightKeyRaw = RedundantCharacterRemoveUtility.
-                removeBracketsOnly(priceResponse.getString("trips.dates.flights.flightKey"));
+                removeBracketsOnly(availabilityResponseJsonPath.getString("trips.dates.flights.flightKey"));
         String outboundFlightKey = StringUtils.chop(outboundFlightKeyRaw);
 
         System.out.println("Price for first available date: " + priceForClosestDate);
@@ -89,12 +109,26 @@ public class RyanairBookingApiTest {
                 "0", "0", outboundFareKey, outboundFlightKey);
         Map<String, Object> fareOptionsMap = oMapper.convertValue(fareOptionsBody, Map.class);
 
-        JsonPath fareOptionsResponse = given().contentType(ContentType.JSON).
+        Response fareOptionsResponse = given().
+                contentType(ContentType.JSON).
                 pathParams(fareOptionsMap).
+                cookies(availabilityResponseCookie).
+                expect().
+                statusCode(200).
                 when().
                 get(UrlDefinitions.fareOptionsUrl).
-                then().contentType(ContentType.JSON).
+                then().
+                contentType(ContentType.JSON).
+                extract().
+                response();
+        Map<String, String> fareOptionsCookies = fareOptionsResponse.getCookies();
+
+        Response priceResponse = given().
+                contentType(ContentType.JSON).
+                cookies(fareOptionsCookies).
+                expect().
                 statusCode(200).
-                extract().response().andReturn().jsonPath();
+                when().
+                post(UrlDefinitions.priceUrl);
     }
 }

@@ -2,6 +2,8 @@ package auto.ryanair.urlDefinitions;
 
 public class UrlDefinitions {
     public static final String loginUrl = "https://api.ryanair.com/userprofile/rest/api/v1/login";
+    public static final String priceUrl = "https://desktopapps.ryanair.com/v4/en-ie/Price";
+    public static final String loggedInUrl = "https://api.ryanair.com/userprofile/v2/loggedin";
 
     public static final String outboundDatesUrl = "https://desktopapps.ryanair.com/v4/" +
             "Calendar?Destination={destination}" +
@@ -11,7 +13,7 @@ public class UrlDefinitions {
             "&Origin={origin}" +
             "&StartDate={startDate}";
 
-    public static final String pricesRequestUrl = "https://desktopapps.ryanair.com/v4/en-ie/" +
+    public static final String availabilityRequestUrl = "https://desktopapps.ryanair.com/v4/en-ie/" +
             "availability?" +
             "ADT={adt}" +
             "&CHD={chd}" +

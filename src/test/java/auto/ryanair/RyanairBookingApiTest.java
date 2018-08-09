@@ -1,169 +1,67 @@
 package auto.ryanair;
 
+import auto.ryanair.body.AvailabilityRequestBody;
+import auto.ryanair.body.FareOptionsBody;
+import auto.ryanair.body.OutboundDatesRequestBody;
+import auto.ryanair.body.PriceRequestBody;
 import auto.ryanair.dto.AvailabilityRequestDto;
 import auto.ryanair.dto.FareOptionsRequestDto;
-import auto.ryanair.dto.LoginRequestDto;
 import auto.ryanair.dto.OutboundDatesRequestDto;
-import auto.ryanair.urlDefinitions.UrlDefinitions;
-import auto.ryanair.utils.RedundantCharacterRemoveUtility;
-import auto.ryanair.utils.TimeStampUtility;
+import auto.ryanair.requests.*;
+import auto.ryanair.response.AvailabilityResponseParser;
+import auto.ryanair.response.LoginResponseParser;
+import auto.ryanair.response.OutboundDatesResponseParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import io.restassured.http.ContentType;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.apache.commons.lang3.StringUtils;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.List;
 import java.util.Map;
 
-import static io.restassured.RestAssured.given;
-
 public class RyanairBookingApiTest {
     private ObjectMapper oMapper = new ObjectMapper();
-    private Gson gson = new Gson();
 
     @Test
     public void loginTest() {
-        LoginRequestDto loginBody = new LoginRequestDto("zyclonc@gmail.com",
-                "123ZZror", "false", "null");
-        Map<String, Object> loginDataMap = oMapper.convertValue(loginBody, Map.class);
+        Response loginResponse = LoginRequest.extractLoginResponse();
+        LoginResponseParser.printCustomerCredentialsFromResponse(loginResponse);
+        Assert.assertEquals(loginResponse.getStatusCode(), 200);
 
-        Response loginResponse = given().
-                contentType(ContentType.URLENC).
-                formParams(loginDataMap).
-                when().
-                post(UrlDefinitions.loginUrl).
-                then().
-                contentType(ContentType.JSON).
-                statusCode(200).
-                extract().response();
+        Response loggedInUserResponse = LoggedInUserRequest.
+                extractLoggedInUserResponse(loginResponse.jsonPath().getString("token"));
+        Assert.assertEquals(200, loggedInUserResponse.getStatusCode());
 
-        JsonPath loginResponseJsonPath = loginResponse.jsonPath();
-        System.out.println("customerId: " + loginResponseJsonPath.getString("customerId"));
-        System.out.println("token: " + loginResponseJsonPath.getString("token"));
+        OutboundDatesRequestDto outboundDatesBody = OutboundDatesRequestBody.constructRequestBody();
+        Response outboundDatesResponse = OutboundDatesRequest.getOutboundDatesResponse(outboundDatesBody);
+        Assert.assertEquals(200, outboundDatesResponse.getStatusCode());
 
-        Response loggedInResponse = given().
-                contentType(ContentType.JSON).
-                header("X-AUTH-TOKEN", loginResponseJsonPath.getString("token")).
-                when().
-                get(UrlDefinitions.loggedInUrl).
-                then().
-                contentType(ContentType.JSON).
-                statusCode(200).
-                extract().
-                response();
+        List<String> outboundDatesShortFormat = outboundDatesResponse.jsonPath().get("outboundDates");
+        OutboundDatesResponseParser.printFirstAvailableFlightDate(outboundDatesBody.getOrigin(), outboundDatesBody.getDestination(), outboundDatesShortFormat.get(0));
 
-        Map<String, String> loggedInCookies = loggedInResponse.getCookies();
-        OutboundDatesRequestDto outboundDatesBody = new OutboundDatesRequestDto("KRK",
-                "false", "false", "17", "LWO", TimeStampUtility.getTimeStampPrettyFormatted());
-        Map<String, Object> loginOutboundDatesMap = oMapper.convertValue(outboundDatesBody, Map.class);
-
-        Response outboundDatesResponse = given().
-                pathParams(loginOutboundDatesMap).
-                when().
-                get(UrlDefinitions.outboundDatesUrl).
-                then().contentType(ContentType.JSON).
-                statusCode(200).extract().response();
-
-        JsonPath outboundDatesJsonPath = outboundDatesResponse.jsonPath();
-        List<String> outboundDatesShortFormat = outboundDatesJsonPath.get("outboundDates");
-        System.out.format("First available flight date for flight %s - %s is: %s\n", outboundDatesBody.getOrigin(),
-                outboundDatesBody.getDestination(), outboundDatesShortFormat.get(0));
-
-        AvailabilityRequestDto availabilityRequestBody = new AvailabilityRequestDto(
-                1,
-                0,
-                outboundDatesShortFormat.get(0),
-                "KRK",
-                "1",
-                0,
-                "true",
-                "LWO",
-                "false",
-                0,
-                "AGREED",
-                "false",
-                "");
+        AvailabilityRequestDto availabilityRequestBody = AvailabilityRequestBody.
+                constructRequestBody(outboundDatesShortFormat.get(0), outboundDatesBody.getDestination(), outboundDatesBody.getOrigin());
         Map<String, Object> pricesRequestMap = oMapper.convertValue(availabilityRequestBody, Map.class);
 
-        Response availabilityResponseJson = given().
-                pathParams(pricesRequestMap).
-                when().
-                get(UrlDefinitions.availabilityRequestUrl).
-                then().contentType(ContentType.JSON).
-                statusCode(200).
-                extract().response();
+        Response availabilityResponse = AvailabilityRequest.getAvailabilityRequestResponse(pricesRequestMap);
+        Assert.assertEquals(200, availabilityResponse.getStatusCode());
 
-        JsonPath availabilityResponseJsonPath = availabilityResponseJson.jsonPath();
+        System.out.println("Price for first available date: " + AvailabilityResponseParser.getPriceForClosestDate(availabilityResponse));
+        System.out.println("Flight number: " + AvailabilityResponseParser.getAvailableFlightNumber(availabilityResponse));
+        System.out.println("fareKey: " + AvailabilityResponseParser.getOutboundFareKey(availabilityResponse));
+        System.out.println("outboundFlightKey: " + AvailabilityResponseParser.getOutboundFlightKey(availabilityResponse));
 
-        String priceForClosestDate = RedundantCharacterRemoveUtility.
-                removeSpacesBracketsComas(availabilityResponseJsonPath.getString("trips.dates.flights.regularFare.fares.amount"));
-        String flightNumber = RedundantCharacterRemoveUtility.
-                removeSpacesBracketsComas(availabilityResponseJsonPath.getString("trips.dates.flights.segments.flightNumber"));
-        String outboundFareKey = RedundantCharacterRemoveUtility.
-                removeSpacesBracketsComas(availabilityResponseJsonPath.getString("trips.dates.flights.regularFare.fareKey"));
-        String outboundFlightKeyRaw = RedundantCharacterRemoveUtility.
-                removeBracketsOnly(availabilityResponseJsonPath.getString("trips.dates.flights.flightKey"));
-        String outboundFlightKey = StringUtils.chop(outboundFlightKeyRaw);
-
-        String outboundDateFullFormat = availabilityResponseJson.jsonPath().getString("trips.dates[0].dateOut[0]");
-        System.out.println("Price for first available date: " + priceForClosestDate);
-        System.out.println("Flight number: " + flightNumber);
-        System.out.println("fareKey: " + outboundFareKey);
-        System.out.println("outboundFlightKey: " + outboundFlightKey);
-
-        FareOptionsRequestDto fareOptionsBody = new FareOptionsRequestDto("1", "0",
-                "0", "0", outboundFareKey, outboundFlightKey);
+        FareOptionsRequestDto fareOptionsBody = FareOptionsBody.constructRequestBody(availabilityResponse);
         Map<String, Object> fareOptionsMap = oMapper.convertValue(fareOptionsBody, Map.class);
 
-        Response fareOptionsResponse = given().
-                contentType(ContentType.JSON).
-                pathParams(fareOptionsMap).
-                expect().
-                statusCode(200).
-                when().
-                get(UrlDefinitions.fareOptionsUrl).
-                then().
-                contentType(ContentType.JSON).
-                extract().
-                response();
+        Response fareOptionsResponse = FareOptionsRequest.extractFareOptionsResponse(fareOptionsMap);
+        Assert.assertEquals(200, fareOptionsResponse.getStatusCode());
 
-        JsonObject priceRequestPayload = new JsonObject();
-        priceRequestPayload.addProperty("PromoCode", "");
-        priceRequestPayload.addProperty("DISC", 0);
-        priceRequestPayload.add("OperatedBy", null);
-        priceRequestPayload.addProperty("OutboundDate", outboundDateFullFormat + "Z");
-        priceRequestPayload.add("InboundDate", null);
-
-        JsonObject flight = new JsonObject();
-        flight.addProperty("flightKey", outboundFlightKey);
-        flight.addProperty("fareKey", outboundFareKey);
-        flight.addProperty("promoDiscount", false);
-        flight.addProperty("fareOption", "");
-
-        JsonArray flights = new JsonArray();
-        flights.add(flight);
-
-        priceRequestPayload.add("flights", flights);
-        priceRequestPayload.addProperty("INF", availabilityRequestBody.getInf());
-        priceRequestPayload.addProperty("CHD", availabilityRequestBody.getChd());
-        priceRequestPayload.addProperty("ADT", availabilityRequestBody.getAdt());
-        priceRequestPayload.addProperty("TEEN", availabilityRequestBody.getTeen());
-
-        Response priceResponse = given().
-                contentType(ContentType.JSON).
-                body(gson.toJson(priceRequestPayload)).
-                expect().
-                statusCode(200).
-                when().
-                post(UrlDefinitions.priceUrl).
-                then().
-                contentType(ContentType.JSON).
-                extract().
-                response();
+        Response priceResponse = PriceRequest.getPriceResponse(PriceRequestBody.constructRequestBody(
+                AvailabilityResponseParser.getOutboundDateFullFormat(availabilityResponse),
+                AvailabilityResponseParser.getOutboundFlightKey(availabilityResponse),
+                AvailabilityResponseParser.getOutboundFareKey(availabilityResponse),
+                availabilityRequestBody));
+        Assert.assertEquals(200, priceResponse.getStatusCode());
     }
 }

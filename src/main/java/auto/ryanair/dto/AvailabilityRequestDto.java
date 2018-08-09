@@ -40,6 +40,11 @@ public class AvailabilityRequestDto {
         return destination;
     }
 
+    public AvailabilityRequestDto withDestinstion(String destination) {
+        this.destination = destination;
+        return this;
+    }
+
     public int getInf() {
         return inf;
     }

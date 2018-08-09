@@ -1,6 +1,7 @@
 package auto.ryanair.urlDefinitions;
 
 public class UrlDefinitions {
+    //need to put into system properties
     public static final String loginUrl = "https://api.ryanair.com/userprofile/rest/api/v1/login";
     public static final String priceUrl = "https://desktopapps.ryanair.com/v4/en-ie/Price";
     public static final String loggedInUrl = "https://api.ryanair.com/userprofile/v2/loggedin";

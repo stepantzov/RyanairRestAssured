@@ -9,6 +9,8 @@ public class LoginRequestDto {
     public LoginRequestDto() {
     }
 
+    //check for builder pattern here;
+
     public LoginRequestDto(String username, String password, String rememberme, String policyAgreed) {
         this.username = username;
         this.password = password;

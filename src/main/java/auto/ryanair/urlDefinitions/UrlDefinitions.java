@@ -1,12 +1,13 @@
 package auto.ryanair.urlDefinitions;
 
-public class UrlDefinitions {
-    //need to put into system properties
-    public static final String loginUrl = "https://api.ryanair.com/userprofile/rest/api/v1/login";
-    public static final String priceUrl = "https://desktopapps.ryanair.com/v4/en-ie/Price";
-    public static final String loggedInUrl = "https://api.ryanair.com/userprofile/v2/loggedin";
+import auto.ryanair.utils.PropertiesReaderUtility;
 
-    public static final String outboundDatesUrl = "https://desktopapps.ryanair.com/v4/" +
+public class UrlDefinitions {
+    public static final String loginUrl = PropertiesReaderUtility.getPropertyByName("login.url.base");
+    public static final String priceUrl = PropertiesReaderUtility.getPropertyByName("price.url.base");
+    public static final String loggedInUrl = PropertiesReaderUtility.getPropertyByName("loggedIn.url.base");
+
+    public static final String outboundDatesUrl = PropertiesReaderUtility.getPropertyByName("outboundDates.url.base") +
             "Calendar?Destination={destination}" +
             "&IncludeConnectingFlights={includeConnectingFlights}" +
             "&IsTwoWay={isTwoWay}" +
@@ -14,7 +15,7 @@ public class UrlDefinitions {
             "&Origin={origin}" +
             "&StartDate={startDate}";
 
-    public static final String availabilityRequestUrl = "https://desktopapps.ryanair.com/v4/en-ie/" +
+    public static final String availabilityRequestUrl = PropertiesReaderUtility.getPropertyByName("availabilityRequest.url.base") +
             "availability?" +
             "ADT={adt}" +
             "&CHD={chd}" +
@@ -30,7 +31,7 @@ public class UrlDefinitions {
             "&exists={exists}" +
             "&promoCode={promoCode}";
 
-    public static final String fareOptionsUrl = "https://desktopapps.ryanair.com/v4/en-ie/" +
+    public static final String fareOptionsUrl = PropertiesReaderUtility.getPropertyByName("fareOptions.url.base") +
             "FareOptions?" +
             "AdultsCount={adultsCount}" +
             "&ChildrenCount={childrenCount}" +

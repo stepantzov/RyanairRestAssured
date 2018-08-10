@@ -10,10 +10,9 @@ public class PropertiesReaderUtility {
         Properties properties = new Properties();
         InputStream input = null;
         try {
-            String filename = "config.properties";
-            input = PropertiesReaderUtility.class.getClassLoader().getResourceAsStream(filename);
+            input = PropertiesReaderUtility.class.getClassLoader().getResourceAsStream("config.properties");
             if (input == null) {
-                System.out.println("Sorry, unable to find specified file");
+                System.out.println("unable to find specified file");
             }
             properties.load(input);
             propertyValue = properties.getProperty(propertyName);

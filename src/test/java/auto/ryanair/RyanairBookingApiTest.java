@@ -10,7 +10,7 @@ public class RyanairBookingApiTest {
     private ObjectMapper oMapper = new ObjectMapper();
 
     @Test
-    public void loginTest() {
+    public void customerFlightTest() {
         Response loginResponse = Login.getResponseAfterLoginWithExistingCredentials();
         Assert.assertEquals(loginResponse.getStatusCode(), 200);
 

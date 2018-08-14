@@ -36,13 +36,13 @@ public class AvailabilityRequestDto {
         this.promoCode = promoCode;
     }
 
-    public String getDestination() {
-        return destination;
+    public AvailabilityRequestDto build() {
+        return new AvailabilityRequestDto(adt, chd, dateOut, destination, flexDaysOut, inf,
+                includeConnectingFlights, origin, roundTrip, teen, toUs, exists, promoCode);
     }
 
-    public AvailabilityRequestDto withDestinstion(String destination) {
-        this.destination = destination;
-        return this;
+    public String getDestination() {
+        return destination;
     }
 
     public int getInf() {
@@ -93,55 +93,68 @@ public class AvailabilityRequestDto {
         return toUs;
     }
 
-    public void setOrigin(String origin) {
-        this.origin = origin;
-    }
-
-    public void setIncludeConnectingFlights(String includeConnectingFlights) {
-        this.includeConnectingFlights = includeConnectingFlights;
-    }
-
-    public void setDestination(String destination) {
-        this.destination = destination;
-    }
-
-    public void setAdt(int adt) {
+    public AvailabilityRequestDto withAdt(int adt) {
         this.adt = adt;
+        return this;
     }
 
-    public void setChd(int chd) {
+    public AvailabilityRequestDto withChd(int chd) {
         this.chd = chd;
+        return this;
     }
 
-    public void setDateOut(String dateOut) {
+    public AvailabilityRequestDto withdateOut(String dateOut) {
         this.dateOut = dateOut;
+        return this;
     }
 
-    public void setExists(String exists) {
-        this.exists = exists;
+    public AvailabilityRequestDto withDestination(String destination) {
+        this.destination = destination;
+        return this;
     }
 
-    public void setFlexDaysOut(String flexDaysOut) {
+    public AvailabilityRequestDto withFlexDaysOut(String flexDaysOut) {
         this.flexDaysOut = flexDaysOut;
+        return this;
     }
 
-    public void setInf(int inf) {
+    public AvailabilityRequestDto withInf(int inf) {
         this.inf = inf;
+        return this;
     }
 
-    public void setPromoCode(String promoCode) {
-        this.promoCode = promoCode;
+    public AvailabilityRequestDto withIncludeConnectingFlights(String includeConnectingFlights) {
+        this.includeConnectingFlights = includeConnectingFlights;
+        return this;
     }
 
-    public void setRoundTrip(String roundTrip) {
+    public AvailabilityRequestDto withOrigin(String origin) {
+        this.origin = origin;
+        return this;
+    }
+
+    public AvailabilityRequestDto withRoundTrip(String roundTrip) {
         this.roundTrip = roundTrip;
+        return this;
     }
 
-    public void setTeen(int teen) {
+    public AvailabilityRequestDto withTeen(int teen) {
         this.teen = teen;
+        return this;
     }
 
-    public void setToUs(String toUs) {
+    public AvailabilityRequestDto withToUs(String toUs) {
         this.toUs = toUs;
+        return this;
+    }
+
+    public AvailabilityRequestDto withExists(String exists) {
+        this.exists = exists;
+        return this;
+    }
+
+    public AvailabilityRequestDto withPromoCode(String promoCode) {
+        this.promoCode = promoCode;
+        return this;
     }
 }

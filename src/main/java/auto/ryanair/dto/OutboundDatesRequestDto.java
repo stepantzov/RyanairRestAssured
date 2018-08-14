@@ -20,6 +20,10 @@ public class OutboundDatesRequestDto {
         this.startDate = startDate;
     }
 
+    public OutboundDatesRequestDto bild() {
+        return new OutboundDatesRequestDto(destination, includeConnectingFlights, isTwoWay, months, origin, startDate);
+    }
+
     public String getDestination() {
         return destination;
     }
@@ -44,27 +48,33 @@ public class OutboundDatesRequestDto {
         return startDate;
     }
 
-    public void setDestination(String destination) {
+    public OutboundDatesRequestDto withDestinationd(String destination) {
         this.destination = destination;
+        return this;
     }
 
-    public void setIncludeConnectingFlights(String includeConnectingFlights) {
+    public OutboundDatesRequestDto withIncludeConnectingFlights(String includeConnectingFlights) {
         this.includeConnectingFlights = includeConnectingFlights;
+        return this;
     }
 
-    public void setIsTwoWay(String isTwoWay) {
+    public OutboundDatesRequestDto withIsTwoWay(String isTwoWay) {
         this.isTwoWay = isTwoWay;
+        return this;
     }
 
-    public void setMonths(String months) {
+    public OutboundDatesRequestDto withMonths(String months) {
         this.months = months;
+        return this;
     }
 
-    public void setOrigin(String origin) {
+    public OutboundDatesRequestDto withOrigin(String origin) {
         this.origin = origin;
+        return this;
     }
 
-    public void setStartDate(String startDate) {
+    public OutboundDatesRequestDto withStartDate(String startDate) {
         this.startDate = startDate;
+        return this;
     }
 }

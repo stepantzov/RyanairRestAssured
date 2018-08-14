@@ -21,6 +21,11 @@ public class FareOptionsRequestDto {
         this.outboundFlightKey = outboundFlightKey;
     }
 
+    public FareOptionsRequestDto build() {
+        return new FareOptionsRequestDto(adultsCount, childrenCount, infantCount, teensCount, outboundFareKey,
+                outboundFlightKey);
+    }
+
     public String getAdultsCount() {
         return adultsCount;
     }
@@ -45,27 +50,33 @@ public class FareOptionsRequestDto {
         return teensCount;
     }
 
-    public void setAdultsCount(String adultsCount) {
+    public FareOptionsRequestDto withAdultsCount(String adultsCount) {
         this.adultsCount = adultsCount;
+        return this;
     }
 
-    public void setChildrenCount(String childrenCount) {
+    public FareOptionsRequestDto withChildrenCount(String childrenCount) {
         this.childrenCount = childrenCount;
+        return this;
     }
 
-    public void setInfantCount(String infantCount) {
+    public FareOptionsRequestDto withInfantCount(String infantCount) {
         this.infantCount = infantCount;
+        return this;
     }
 
-    public void setOutboundFareKey(String outboundFareKey) {
-        this.outboundFareKey = outboundFareKey;
-    }
-
-    public void setOutboundFlightKey(String outboundFlightKey) {
-        this.outboundFlightKey = outboundFlightKey;
-    }
-
-    public void setTeensCount(String teensCount) {
+    public FareOptionsRequestDto withTeensCount(String teensCount) {
         this.teensCount = teensCount;
+        return this;
+    }
+
+    public FareOptionsRequestDto withOutboundFareKey(String outboundFareKey) {
+        this.outboundFareKey = outboundFareKey;
+        return this;
+    }
+
+    public FareOptionsRequestDto withOutboundFlightKey(String outboundFlightKey) {
+        this.outboundFlightKey = outboundFlightKey;
+        return this;
     }
 }

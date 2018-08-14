@@ -9,13 +9,15 @@ public class LoginRequestDto {
     public LoginRequestDto() {
     }
 
-    //check for builder pattern here;
-
     public LoginRequestDto(String username, String password, String rememberme, String policyAgreed) {
         this.username = username;
         this.password = password;
         this.policyAgreed = policyAgreed;
         this.rememberme = rememberme;
+    }
+
+    public LoginRequestDto build() {
+        return new LoginRequestDto(username, password, policyAgreed, rememberme);
     }
 
     public String getPassword() {
@@ -34,19 +36,23 @@ public class LoginRequestDto {
         return username;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setPolicyAgreed(String policyAgreed) {
-        this.policyAgreed = policyAgreed;
-    }
-
-    public void setRememberme(String rememberme) {
-        this.rememberme = rememberme;
-    }
-
-    public void setUsername(String username) {
+    public LoginRequestDto withUsername(String username) {
         this.username = username;
+        return this;
+    }
+
+    public LoginRequestDto withPassword(String password) {
+        this.password = password;
+        return this;
+    }
+
+    public LoginRequestDto withRememberme(String rememberme) {
+        this.rememberme = rememberme;
+        return this;
+    }
+
+    public LoginRequestDto withPolicyAgreed(String policyAgreed) {
+        this.policyAgreed = policyAgreed;
+        return this;
     }
 }

@@ -9,7 +9,6 @@ import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 
-
 public class OutboundDatesRequest {
     public static Response getOutboundDatesResponse(OutboundDatesRequestDto outboundDatesBody) {
         ObjectMapper oMapper = new ObjectMapper();

@@ -1,6 +1,6 @@
 package auto.ryanair.requests;
 
-import auto.ryanair.urlDefinitions.UrlDefinitions;
+import auto.ryanair.utils.PropertiesReader;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
@@ -13,7 +13,7 @@ public class PriceRequest {
                 body(jsonBody).
                 expect().
                 when().
-                post(UrlDefinitions.priceUrl).
+                post(PropertiesReader.getPropertyByName("price.url.base")).
                 then().
                 contentType(ContentType.JSON).
                 extract().

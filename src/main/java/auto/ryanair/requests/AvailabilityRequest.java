@@ -1,6 +1,7 @@
 package auto.ryanair.requests;
 
-import auto.ryanair.urlDefinitions.UrlDefinitions;
+import auto.ryanair.pathParams.PathParameters;
+import auto.ryanair.utils.PropertiesReader;
 import io.restassured.response.Response;
 
 import java.util.Map;
@@ -12,7 +13,9 @@ public class AvailabilityRequest {
         return given().
                 pathParams(pathParams).
                 when().
-                get(UrlDefinitions.availabilityRequestUrl).
+                get(PropertiesReader.
+                        getPropertyByName("availabilityRequest.url.base").
+                        concat(PathParameters.availabilityRequestParams)).
                 then().
                 extract().
                 response();

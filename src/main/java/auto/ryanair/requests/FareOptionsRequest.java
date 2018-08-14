@@ -1,6 +1,7 @@
 package auto.ryanair.requests;
 
-import auto.ryanair.urlDefinitions.UrlDefinitions;
+import auto.ryanair.pathParams.PathParameters;
+import auto.ryanair.utils.PropertiesReader;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
@@ -15,7 +16,9 @@ public class FareOptionsRequest {
                 pathParams(fareOptionsMap).
                 expect().
                 when().
-                get(UrlDefinitions.fareOptionsUrl).
+                get(PropertiesReader.
+                        getPropertyByName("fareOptions.url.base").
+                        concat(PathParameters.fareOptionsParams)).
                 then().
                 contentType(ContentType.JSON).
                 extract().

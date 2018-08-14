@@ -1,7 +1,7 @@
 package auto.ryanair.requests;
 
 import auto.ryanair.dto.LoginRequestDto;
-import auto.ryanair.urlDefinitions.UrlDefinitions;
+import auto.ryanair.utils.PropertiesReader;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -21,7 +21,7 @@ public class LoginRequest {
                 contentType(ContentType.URLENC).
                 formParams(loginDataMap).
                 when().
-                post(UrlDefinitions.loginUrl).
+                post(PropertiesReader.getPropertyByName("login.url.base")).
                 then().
                 extract().response();
     }

@@ -1,6 +1,6 @@
 package auto.ryanair.requests;
 
-import auto.ryanair.urlDefinitions.UrlDefinitions;
+import auto.ryanair.utils.PropertiesReader;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
@@ -12,7 +12,7 @@ public class LoggedInUserRequest {
                 contentType(ContentType.JSON).
                 header("X-AUTH-TOKEN", xAuthTokenHeader).
                 when().
-                get(UrlDefinitions.loggedInUrl).
+                get(PropertiesReader.getPropertyByName("loggedIn.url.base")).
                 then().
                 extract().
                 response();

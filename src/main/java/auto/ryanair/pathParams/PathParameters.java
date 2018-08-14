@@ -1,13 +1,7 @@
-package auto.ryanair.urlDefinitions;
+package auto.ryanair.pathParams;
 
-import auto.ryanair.utils.PropertiesReaderUtility;
-
-public class UrlDefinitions {
-    public static final String loginUrl = PropertiesReaderUtility.getPropertyByName("login.url.base");
-    public static final String priceUrl = PropertiesReaderUtility.getPropertyByName("price.url.base");
-    public static final String loggedInUrl = PropertiesReaderUtility.getPropertyByName("loggedIn.url.base");
-
-    public static final String outboundDatesUrl = PropertiesReaderUtility.getPropertyByName("outboundDates.url.base") +
+public class PathParameters {
+    public static final String outboundDatesParams =
             "Calendar?Destination={destination}" +
             "&IncludeConnectingFlights={includeConnectingFlights}" +
             "&IsTwoWay={isTwoWay}" +
@@ -15,7 +9,7 @@ public class UrlDefinitions {
             "&Origin={origin}" +
             "&StartDate={startDate}";
 
-    public static final String availabilityRequestUrl = PropertiesReaderUtility.getPropertyByName("availabilityRequest.url.base") +
+    public static final String availabilityRequestParams =
             "availability?" +
             "ADT={adt}" +
             "&CHD={chd}" +
@@ -31,7 +25,7 @@ public class UrlDefinitions {
             "&exists={exists}" +
             "&promoCode={promoCode}";
 
-    public static final String fareOptionsUrl = PropertiesReaderUtility.getPropertyByName("fareOptions.url.base") +
+    public static final String fareOptionsParams =
             "FareOptions?" +
             "AdultsCount={adultsCount}" +
             "&ChildrenCount={childrenCount}" +

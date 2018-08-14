@@ -1,7 +1,8 @@
 package auto.ryanair.requests;
 
 import auto.ryanair.dto.OutboundDatesRequestDto;
-import auto.ryanair.urlDefinitions.UrlDefinitions;
+import auto.ryanair.pathParams.PathParameters;
+import auto.ryanair.utils.PropertiesReader;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.response.Response;
 
@@ -17,7 +18,9 @@ public class OutboundDatesRequest {
         return given().
                 pathParams(loginOutboundDatesMap).
                 when().
-                get(UrlDefinitions.outboundDatesUrl).
+                get(PropertiesReader.
+                        getPropertyByName("outboundDates.url.base").
+                        concat(PathParameters.outboundDatesParams)).
                 then().
                 extract().
                 response();

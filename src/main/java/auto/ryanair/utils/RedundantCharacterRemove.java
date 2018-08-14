@@ -1,6 +1,6 @@
 package auto.ryanair.utils;
 
-public class RedundantCharacterRemoveUtility {
+public class RedundantCharacterRemove {
     public static String removeSpacesBracketsComas(String rawString) {
         return rawString.replace("[", "").replace("]", "").
                 replace(",", "").replaceAll("\\s+", "");

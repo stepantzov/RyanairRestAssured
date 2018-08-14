@@ -1,7 +1,7 @@
 package auto.ryanair.body;
 
 import auto.ryanair.dto.OutboundDatesRequestDto;
-import auto.ryanair.utils.TimeStampUtility;
+import auto.ryanair.utils.TimeStamp;
 
 public class OutboundDatesRequestBody {
     public static OutboundDatesRequestDto constructRequestBody() {
@@ -11,6 +11,6 @@ public class OutboundDatesRequestBody {
                 "false",
                 "17",
                 "LWO",
-                TimeStampUtility.getTimeStampPrettyFormatted());
+                TimeStamp.getTimeStampFormatted());
     }
 }

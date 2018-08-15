@@ -1,14 +1,11 @@
 package auto.ryanair;
 
 import auto.ryanair.steps.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.response.Response;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class RyanairBookingApiTest {
-    private ObjectMapper oMapper = new ObjectMapper();
-
     @Test
     public void customerFlightTest() {
         Response loginResponse = Login.getResponseAfterLoginWithExistingCredentials();

@@ -15,30 +15,18 @@ public class AvailabilityRequestDto {
     private String exists;
     private String promoCode;
 
+
     public AvailabilityRequestDto() {
-    }
-
-    public AvailabilityRequestDto(int adt, int chd, String dateOut, String destination, String flexDaysOut,
-                                  int inf, String includeConnectingFlights, String origin, String roundTrip,
-                                  int teen, String toUs, String exists, String promoCode) {
-        this.adt = adt;
-        this.chd = chd;
-        this.dateOut = dateOut;
-        this.destination = destination;
-        this.flexDaysOut = flexDaysOut;
-        this.inf = inf;
-        this.includeConnectingFlights = includeConnectingFlights;
-        this.origin = origin;
-        this.roundTrip = roundTrip;
-        this.teen = teen;
-        this.toUs = toUs;
-        this.exists = exists;
-        this.promoCode = promoCode;
-    }
-
-    public AvailabilityRequestDto build() {
-        return new AvailabilityRequestDto(adt, chd, dateOut, destination, flexDaysOut, inf,
-                includeConnectingFlights, origin, roundTrip, teen, toUs, exists, promoCode);
+        this.adt = 1;
+        this.chd = 1;
+        this.flexDaysOut = "1";
+        this.inf = 0;
+        this.includeConnectingFlights = "true";
+        this.roundTrip = "false";
+        this.teen = 0;
+        this.toUs = "AGREED";
+        this.exists = "false";
+        this.promoCode = "";
     }
 
     public String getDestination() {
@@ -113,48 +101,8 @@ public class AvailabilityRequestDto {
         return this;
     }
 
-    public AvailabilityRequestDto withFlexDaysOut(String flexDaysOut) {
-        this.flexDaysOut = flexDaysOut;
-        return this;
-    }
-
-    public AvailabilityRequestDto withInf(int inf) {
-        this.inf = inf;
-        return this;
-    }
-
-    public AvailabilityRequestDto withIncludeConnectingFlights(String includeConnectingFlights) {
-        this.includeConnectingFlights = includeConnectingFlights;
-        return this;
-    }
-
     public AvailabilityRequestDto withOrigin(String origin) {
         this.origin = origin;
-        return this;
-    }
-
-    public AvailabilityRequestDto withRoundTrip(String roundTrip) {
-        this.roundTrip = roundTrip;
-        return this;
-    }
-
-    public AvailabilityRequestDto withTeen(int teen) {
-        this.teen = teen;
-        return this;
-    }
-
-    public AvailabilityRequestDto withToUs(String toUs) {
-        this.toUs = toUs;
-        return this;
-    }
-
-    public AvailabilityRequestDto withExists(String exists) {
-        this.exists = exists;
-        return this;
-    }
-
-    public AvailabilityRequestDto withPromoCode(String promoCode) {
-        this.promoCode = promoCode;
         return this;
     }
 }

@@ -7,17 +7,8 @@ public class LoginRequestDto {
     private String policyAgreed;
 
     public LoginRequestDto() {
-    }
-
-    public LoginRequestDto(String username, String password, String rememberme, String policyAgreed) {
-        this.username = username;
-        this.password = password;
-        this.policyAgreed = policyAgreed;
-        this.rememberme = rememberme;
-    }
-
-    public LoginRequestDto build() {
-        return new LoginRequestDto(username, password, policyAgreed, rememberme);
+        this.policyAgreed = null;
+        this.rememberme = "false";
     }
 
     public String getPassword() {
@@ -43,16 +34,6 @@ public class LoginRequestDto {
 
     public LoginRequestDto withPassword(String password) {
         this.password = password;
-        return this;
-    }
-
-    public LoginRequestDto withRememberme(String rememberme) {
-        this.rememberme = rememberme;
-        return this;
-    }
-
-    public LoginRequestDto withPolicyAgreed(String policyAgreed) {
-        this.policyAgreed = policyAgreed;
         return this;
     }
 }

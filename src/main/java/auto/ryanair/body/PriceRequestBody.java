@@ -6,7 +6,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 public class PriceRequestBody {
-
     public static String constructRequestBody(String outboundDate, String flightKey,
                                               String fareKey, AvailabilityRequestDto availabilityRequestBody) {
         Gson gson = new Gson();

@@ -13,8 +13,9 @@ import static io.restassured.RestAssured.given;
 public class LoginRequest {
     public static Response extractLoginResponse() {
         ObjectMapper oMapper = new ObjectMapper();
-        LoginRequestDto loginBody = new LoginRequestDto().withUsername("zyclonc@gmail.com").
-                withPassword("123ZZror").withRememberme("false").withPolicyAgreed("null").build();
+        LoginRequestDto loginBody = new LoginRequestDto()
+                .withUsername("zyclonc@gmail.com")
+                .withPassword("123ZZror");
         Map<String, Object> loginDataMap = oMapper.convertValue(loginBody, Map.class);
 
         return given().

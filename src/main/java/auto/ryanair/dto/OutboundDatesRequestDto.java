@@ -9,19 +9,9 @@ public class OutboundDatesRequestDto {
     private String startDate;
 
     public OutboundDatesRequestDto() {
-    }
-
-    public OutboundDatesRequestDto(String destination, String includeConnectingFlights, String isTwoWay, String months, String origin, String startDate) {
-        this.destination = destination;
-        this.includeConnectingFlights = includeConnectingFlights;
-        this.isTwoWay = isTwoWay;
-        this.months = months;
-        this.origin = origin;
-        this.startDate = startDate;
-    }
-
-    public OutboundDatesRequestDto bild() {
-        return new OutboundDatesRequestDto(destination, includeConnectingFlights, isTwoWay, months, origin, startDate);
+        this.includeConnectingFlights = "false";
+        this.isTwoWay = "false";
+        this.months = "17";
     }
 
     public String getDestination() {
@@ -48,7 +38,7 @@ public class OutboundDatesRequestDto {
         return startDate;
     }
 
-    public OutboundDatesRequestDto withDestinationd(String destination) {
+    public OutboundDatesRequestDto withDestination(String destination) {
         this.destination = destination;
         return this;
     }

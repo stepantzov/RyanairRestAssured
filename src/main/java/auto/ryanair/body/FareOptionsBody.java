@@ -1,6 +1,6 @@
 package auto.ryanair.body;
 
-import auto.ryanair.dto.FareOptionsRequestDto;
+import auto.ryanair.dto.request.FareOptionsRequestDto;
 import auto.ryanair.response.AvailabilityResponseParser;
 import io.restassured.response.Response;
 

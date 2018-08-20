@@ -1,4 +1,4 @@
-package auto.ryanair.dto;
+package auto.ryanair.dto.request;
 
 public class AvailabilityRequestDto {
     private int adt;

@@ -1,10 +1,13 @@
 package auto.ryanair.response;
 
-import io.restassured.response.Response;
+import auto.ryanair.dto.response.LoginResponseDto;
 
 public class LoginResponseParser {
-    public static void printCustomerCredentialsFromResponse(Response loginResponse) {
-        System.out.println("customerId: " + loginResponse.jsonPath().getString("customerId"));
-        System.out.println("token: " + loginResponse.jsonPath().getString("token"));
+    public static void printCredentialsFromResponse(LoginResponseDto responseDto) {
+        LoginResponseDto loginResponseDto = new LoginResponseDto();
+        loginResponseDto.build(responseDto);
+
+        System.out.println("customerId: " + loginResponseDto.getCustomerId());
+        System.out.println("token: " + loginResponseDto.getToken());
     }
 }

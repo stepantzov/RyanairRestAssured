@@ -2,42 +2,49 @@ package auto.ryanair.steps;
 
 import auto.ryanair.body.AvailabilityRequestBody;
 import auto.ryanair.body.OutboundDatesRequestBody;
-import auto.ryanair.dto.AvailabilityRequestDto;
-import auto.ryanair.dto.OutboundDatesRequestDto;
+import auto.ryanair.dto.request.AvailabilityRequestDto;
+import auto.ryanair.dto.request.OutboundDatesRequestDto;
+import auto.ryanair.dto.response.AvaliabilityResponseDto.AvailabilityResponseDto;
+import auto.ryanair.dto.response.OutboundDatesResponseDto;
 import auto.ryanair.requests.AvailabilityRequest;
-import auto.ryanair.response.AvailabilityResponseParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.restassured.response.Response;
 
-import java.util.List;
 import java.util.Map;
 
 public class FlightAvailability {
     static OutboundDatesRequestDto outboundDatesBody = OutboundDatesRequestBody.constructRequestBody();
     static ObjectMapper oMapper = new ObjectMapper();
 
-    public static AvailabilityRequestDto getAvailabilityRequestBody(Response outboundDatesResponse) {
-        List<String> outboundDatesShortFormat = outboundDatesResponse.jsonPath().get("outboundDates");
-        AvailabilityRequestDto availabilityRequestBody = AvailabilityRequestBody.constructRequestBody(
-                outboundDatesShortFormat.get(0), outboundDatesBody.getDestination(), outboundDatesBody.getOrigin());
+    public static AvailabilityRequestDto getAvailabilityRequestBody(OutboundDatesResponseDto outboundDatesResponse) {
+        AvailabilityRequestDto availabilityRequestBody = AvailabilityRequestBody
+                .constructRequestBody(
+                        outboundDatesResponse.getOutboundDates().get(0),
+                        outboundDatesBody.getDestination(),
+                        outboundDatesBody.getOrigin());
 
         return availabilityRequestBody;
     }
 
-    public static Response getResponseForFlightAvailability(Response outboundDatesResponse) {
+    public static AvailabilityResponseDto getResponseForFlightAvailability(OutboundDatesResponseDto outboundDatesResponseDto) {
 
-        return AvailabilityRequest.getAvailabilityRequestResponse(
-                oMapper.convertValue(getAvailabilityRequestBody(outboundDatesResponse), Map.class));
+        return AvailabilityRequest.getResponse(oMapper
+                .convertValue(getAvailabilityRequestBody(outboundDatesResponseDto), Map.class));
     }
 
-    public static void printFirstAvailableFlightDetails(Response flightAvailabilityResponse) {
-        System.out.println("Price for first available date: " + AvailabilityResponseParser.
-                getPriceForClosestDate(flightAvailabilityResponse));
-        System.out.println("fareKey: " + AvailabilityResponseParser.
-                getOutboundFareKey(flightAvailabilityResponse));
+    public static void printFirstAvailableFlightDetails(AvailabilityResponseDto availabilityResponseDto) {
+        System.out.println("Price for first available date: " + (availabilityResponseDto
+                .getTrips().get(0)
+                .getDates().get(0)
+                .getFlights().get(0)
+                .getRegularFare()
+                .getFares()
+                .get(0)
+                .getAmount()));
+       /* System.out.println("fareKey: " + AvailabilityResponseParser.
+                getOutboundFareKey(availabilityResponseDto));
         System.out.println("Flight number: " + AvailabilityResponseParser.
-                getAvailableFlightNumber(flightAvailabilityResponse));
+                getAvailableFlightNumber(availabilityResponseDto));
         System.out.println("outboundFlightKey: " + AvailabilityResponseParser.
-                getOutboundFlightKey(flightAvailabilityResponse));
+                getOutboundFlightKey(availabilityResponseDto));*/
     }
 }

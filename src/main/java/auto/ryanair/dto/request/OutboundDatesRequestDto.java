@@ -1,4 +1,8 @@
-package auto.ryanair.dto;
+package auto.ryanair.dto.request;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.util.Map;
 
 public class OutboundDatesRequestDto {
     private String destination;
@@ -66,5 +70,12 @@ public class OutboundDatesRequestDto {
     public OutboundDatesRequestDto withStartDate(String startDate) {
         this.startDate = startDate;
         return this;
+    }
+
+    public Map<String, Object> convertToMap(OutboundDatesRequestDto outboundDatesRequestDto) {
+        ObjectMapper oMapper = new ObjectMapper();
+        Map<String, Object> outboundDatesRequestMap = oMapper.convertValue(outboundDatesRequestDto, Map.class);
+
+        return outboundDatesRequestMap;
     }
 }

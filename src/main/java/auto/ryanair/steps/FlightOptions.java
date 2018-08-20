@@ -1,7 +1,7 @@
 package auto.ryanair.steps;
 
 import auto.ryanair.body.FareOptionsBody;
-import auto.ryanair.dto.FareOptionsRequestDto;
+import auto.ryanair.dto.request.FareOptionsRequestDto;
 import auto.ryanair.requests.FareOptionsRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.response.Response;

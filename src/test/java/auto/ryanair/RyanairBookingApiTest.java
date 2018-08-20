@@ -1,31 +1,30 @@
 package auto.ryanair;
 
-import auto.ryanair.steps.*;
-import io.restassured.response.Response;
+import auto.ryanair.dto.response.AvaliabilityResponseDto.AvailabilityResponseDto;
+import auto.ryanair.steps.FlightAvailability;
+import auto.ryanair.steps.Login;
+import auto.ryanair.steps.Search;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class RyanairBookingApiTest {
     @Test
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public void customerFlightTest() {
-        Response loginResponse = Login.getResponseAfterLoginWithExistingCredentials();
-        Assert.assertEquals(loginResponse.getStatusCode(), 200);
+        Assert.assertEquals(200, Login.getAuthorizationResponseStatusCode(Login.getLoginResponse()));
+        Search.printFlightDate(Search.getResponseAfterFlightSearch());
 
-        Response loggedInUserResponse = Login.getResponseAfterTokenAuthorization(loginResponse);
-        Assert.assertEquals(200, loggedInUserResponse.getStatusCode());
+        AvailabilityResponseDto flightAvailabilityResponse = FlightAvailability
+                .getResponseForFlightAvailability(Search.getResponseAfterFlightSearch());
 
-        Response outboundDatesResponse = FlightSearch.getResponseAfterFlightSearch();
-        FlightSearch.printFlights(outboundDatesResponse);
-        Assert.assertEquals(200, outboundDatesResponse.getStatusCode());
-
-        Response flightAvailabilityResponse = FlightAvailability.getResponseForFlightAvailability(outboundDatesResponse);
         FlightAvailability.printFirstAvailableFlightDetails(flightAvailabilityResponse);
-        Assert.assertEquals(200, flightAvailabilityResponse.getStatusCode());
+        /*Assert.assertEquals(200, flightAvailabilityResponse.getStatusCode());
 
         Response fareOptionsResponse = FlightOptions.getResponseForFlightOptions(flightAvailabilityResponse);
         Assert.assertEquals(200, fareOptionsResponse.getStatusCode());
 
         Response priceResponse = Price.getResponseForFlightPrice(flightAvailabilityResponse, outboundDatesResponse);
-        Assert.assertEquals(200, priceResponse.getStatusCode());
+        Assert.assertEquals(200, priceResponse.getStatusCode());*/
     }
 }

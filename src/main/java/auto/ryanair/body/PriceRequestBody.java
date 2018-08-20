@@ -1,6 +1,6 @@
 package auto.ryanair.body;
 
-import auto.ryanair.dto.AvailabilityRequestDto;
+import auto.ryanair.dto.request.AvailabilityRequestDto;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

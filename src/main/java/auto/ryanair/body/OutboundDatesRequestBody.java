@@ -1,6 +1,6 @@
 package auto.ryanair.body;
 
-import auto.ryanair.dto.OutboundDatesRequestDto;
+import auto.ryanair.dto.request.OutboundDatesRequestDto;
 import auto.ryanair.utils.TimeStamp;
 
 public class OutboundDatesRequestBody {

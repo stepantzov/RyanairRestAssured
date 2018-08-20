@@ -8,15 +8,15 @@ import static io.restassured.RestAssured.given;
 
 public class PriceRequest {
     public static Response getPriceResponse(Object jsonBody) {
-        return given().
-                contentType(ContentType.JSON).
-                body(jsonBody).
-                expect().
-                when().
-                post(PropertiesReader.getPropertyByName("price.url.base")).
-                then().
-                contentType(ContentType.JSON).
-                extract().
-                response();
+        return given()
+                .contentType(ContentType.JSON)
+                .body(jsonBody)
+                .expect()
+                .when()
+                .post(PropertiesReader.getPropertyByName("price.url.base"))
+                .then()
+                .contentType(ContentType.JSON)
+                .extract()
+                .response();
     }
 }

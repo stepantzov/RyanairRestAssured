@@ -1,4 +1,8 @@
-package auto.ryanair.dto;
+package auto.ryanair.dto.request;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.util.Map;
 
 public class LoginRequestDto {
     private String username;
@@ -9,6 +13,13 @@ public class LoginRequestDto {
     public LoginRequestDto() {
         this.policyAgreed = null;
         this.rememberme = "false";
+    }
+
+    public Map<String, Object> convertToMap(LoginRequestDto loginRequestDto) {
+        ObjectMapper oMapper = new ObjectMapper();
+        Map<String, Object> loginDataMap = oMapper.convertValue(loginRequestDto, Map.class);
+
+        return loginDataMap;
     }
 
     public String getPassword() {

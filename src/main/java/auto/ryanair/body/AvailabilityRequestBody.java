@@ -1,6 +1,6 @@
 package auto.ryanair.body;
 
-import auto.ryanair.dto.AvailabilityRequestDto;
+import auto.ryanair.dto.request.AvailabilityRequestDto;
 
 public class AvailabilityRequestBody {
     public static AvailabilityRequestDto constructRequestBody(String date, String destination, String origin) {

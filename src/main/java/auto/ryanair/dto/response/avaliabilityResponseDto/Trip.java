@@ -1,4 +1,4 @@
-package auto.ryanair.dto.response.AvaliabilityResponseDto;
+package auto.ryanair.dto.response.avaliabilityResponseDto;
 
 import com.fasterxml.jackson.annotation.*;
 

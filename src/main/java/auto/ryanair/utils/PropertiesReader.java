@@ -8,7 +8,7 @@ public class PropertiesReader {
     public static String getPropertyByName(String propertyName) {
         String propertyValue = null;
         Properties properties = new Properties();
-        InputStream input = null;
+        InputStream input;
         try {
             input = PropertiesReader.class.getClassLoader().getResourceAsStream("config.properties");
             if (input == null) {

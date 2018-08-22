@@ -6,8 +6,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 public class PriceRequestBody {
-    public static String constructRequestBody(String outboundDate, String flightKey,
-                                              String fareKey, AvailabilityRequestDto availabilityRequestBody) {
+    public static String constructRequestJson(String outboundDate, String flightKey, String fareKey,
+                                              AvailabilityRequestDto availabilityRequestBody) {
         Gson gson = new Gson();
         JsonObject priceRequestPayload = new JsonObject();
         priceRequestPayload.addProperty("PromoCode", "");

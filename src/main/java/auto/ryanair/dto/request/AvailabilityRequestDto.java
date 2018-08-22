@@ -91,7 +91,7 @@ public class AvailabilityRequestDto {
         return this;
     }
 
-    public AvailabilityRequestDto withdateOut(String dateOut) {
+    public AvailabilityRequestDto withDateOut(String dateOut) {
         this.dateOut = dateOut;
         return this;
     }

@@ -9,7 +9,6 @@ import static io.restassured.RestAssured.given;
 
 public class OutboundDatesRequest {
     public static OutboundDatesResponseDto getOutboundDatesResponse(OutboundDatesRequestDto outboundDatesBody) {
-
         return given()
                 .pathParams(outboundDatesBody.convertToMap(outboundDatesBody))
                 .when()

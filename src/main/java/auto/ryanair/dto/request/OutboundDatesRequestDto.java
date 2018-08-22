@@ -1,5 +1,6 @@
 package auto.ryanair.dto.request;
 
+import auto.ryanair.utils.TimeStamp;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Map;
@@ -16,6 +17,7 @@ public class OutboundDatesRequestDto {
         this.includeConnectingFlights = "false";
         this.isTwoWay = "false";
         this.months = "17";
+        this.startDate = TimeStamp.getTimeStampFormatted();
     }
 
     public String getDestination() {

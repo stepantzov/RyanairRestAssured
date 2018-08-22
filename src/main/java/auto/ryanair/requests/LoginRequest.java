@@ -8,7 +8,7 @@ import io.restassured.http.ContentType;
 import static io.restassured.RestAssured.given;
 
 public class LoginRequest {
-    public static LoginResponseDto extractLoginResponse() {
+    public static LoginResponseDto getResponseDto() {
         LoginRequestDto loginBodyDto = new LoginRequestDto()
                 .withUsername("zyclonc@gmail.com")
                 .withPassword("123ZZror");

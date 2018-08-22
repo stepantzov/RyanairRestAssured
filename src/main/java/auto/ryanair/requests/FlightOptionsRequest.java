@@ -9,8 +9,8 @@ import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 
-public class FareOptionsRequest {
-    public static Response extractFareOptionsResponse(Map fareOptionsMap) {
+public class FlightOptionsRequest {
+    public static Response extractResponse(Map fareOptionsMap) {
         return given()
                 .contentType(ContentType.JSON)
                 .pathParams(fareOptionsMap)
@@ -20,7 +20,7 @@ public class FareOptionsRequest {
                         .getPropertyByName("fareOptions.url.base")
                         .concat(PathParameters.fareOptionsParams))
                 .then()
-                .contentType(ContentType.JSON)
+                .statusCode(200)
                 .extract()
                 .response();
     }

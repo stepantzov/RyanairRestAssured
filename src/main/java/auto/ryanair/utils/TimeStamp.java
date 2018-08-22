@@ -8,9 +8,8 @@ public class TimeStamp {
     public static String getTimeStampFormatted() {
         Date currentDate = Calendar.getInstance().getTime();
         Calendar calendar = Calendar.getInstance();
-
         calendar.setTime(currentDate);
-        calendar.add(Calendar.DATE, 3);
+        calendar.add(Calendar.DATE, 4);
 
         return new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
     }

@@ -6,16 +6,15 @@ import auto.ryanair.requests.LoginRequest;
 import auto.ryanair.response.LoginResponseParser;
 
 public class Login {
-    public static LoginResponseDto getLoginResponse() {
-        LoginResponseDto loginResponse = LoginRequest.extractLoginResponse();
+    public static LoginResponseDto getResponseDto() {
+        LoginResponseDto loginResponse = LoginRequest.getResponseDto();
         LoginResponseParser.printCredentialsFromResponse(loginResponse);
 
         return loginResponse;
     }
 
-    public static int getAuthorizationResponseStatusCode(LoginResponseDto loginResponse) {
+    public static void getResponse(LoginResponseDto loginResponse) {
         LoginResponseDto loginResponseDto = new LoginResponseDto();
-
-        return LoggedInUserRequest.extractStatusCode(loginResponseDto.build(loginResponse).getToken());
+        LoggedInUserRequest.extractStatusCode(loginResponseDto.build(loginResponse).getToken());
     }
 }

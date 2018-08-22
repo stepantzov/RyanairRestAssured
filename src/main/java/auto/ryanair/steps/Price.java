@@ -2,16 +2,18 @@ package auto.ryanair.steps;
 
 import auto.ryanair.body.PriceRequestBody;
 import auto.ryanair.dto.response.OutboundDatesResponseDto;
+import auto.ryanair.dto.response.avaliabilityResponseDto.AvailabilityResponseDto;
+import auto.ryanair.dto.response.priceResponseDto.PriceResponseDto;
 import auto.ryanair.requests.PriceRequest;
-import auto.ryanair.response.AvailabilityResponseParser;
-import io.restassured.response.Response;
 
 public class Price {
-    public static Response getResponseForFlightPrice(Response flightAvailabilityResponse, OutboundDatesResponseDto outboundDatesResponse) {
-        return PriceRequest.getPriceResponse(PriceRequestBody.constructRequestBody(
-                AvailabilityResponseParser.getOutboundDateFullFormat(flightAvailabilityResponse),
-                AvailabilityResponseParser.getOutboundFlightKey(flightAvailabilityResponse),
-                AvailabilityResponseParser.getOutboundFareKey(flightAvailabilityResponse),
-                FlightAvailability.getAvailabilityRequestBody(outboundDatesResponse)));
+    public static PriceResponseDto getResponse(AvailabilityResponseDto availabilityResponseDto, OutboundDatesResponseDto outboundDatesResponse) {
+        Availability availability = new Availability();
+
+        return PriceRequest.getResponse(PriceRequestBody.constructRequestJson(
+                availability.getDateOut(availabilityResponseDto),
+                availability.getFlightKey(availabilityResponseDto),
+                availability.getFlightFareKey(availabilityResponseDto),
+                Availability.getRequestDto(outboundDatesResponse)));
     }
 }

@@ -1,6 +1,6 @@
 package auto.ryanair.pathParams;
 
-public class PathParameters {
+public class EndPoints {
     public static final String outboundDatesParams =
             "Calendar?Destination={destination}" +
             "&IncludeConnectingFlights={includeConnectingFlights}" +

@@ -11,10 +11,10 @@ public class PriceRequest {
         return given()
                 .contentType(ContentType.JSON)
                 .body(jsonBody)
-                .expect().statusCode(200)
                 .when()
                 .post(PropertiesReader.getPropertyByName("price.url.base"))
                 .then()
+                .statusCode(200)
                 .contentType(ContentType.JSON)
                 .extract()
                 .as(PriceResponseDto.class);

@@ -1,20 +1,26 @@
 package auto.ryanair.steps;
 
+import auto.ryanair.dto.request.LoginRequestDto;
 import auto.ryanair.dto.response.LoginResponseDto;
-import auto.ryanair.requests.LoggedInUserRequest;
 import auto.ryanair.requests.LoginRequest;
-import auto.ryanair.response.LoginResponseParser;
 
 public class Login {
-    public static LoginResponseDto getResponseDto() {
-        LoginResponseDto loginResponse = LoginRequest.getResponseDto();
-        LoginResponseParser.printCredentialsFromResponse(loginResponse);
+    public static LoginResponseDto getResponse() {
+        LoginRequestDto loginRequestDto = new LoginRequestDto()
+                .withUsername("zyclonc@gmail.com")
+                .withPassword("123ZZror");
+
+        LoginResponseDto loginResponse = LoginRequest.getResponseDto(loginRequestDto);
+        printCredentialsFromResponse(loginResponse);
 
         return loginResponse;
     }
 
-    public static void getResponse(LoginResponseDto loginResponse) {
+    public static void printCredentialsFromResponse(LoginResponseDto responseDto) {
         LoginResponseDto loginResponseDto = new LoginResponseDto();
-        LoggedInUserRequest.extractStatusCode(loginResponseDto.build(loginResponse).getToken());
+        loginResponseDto.build(responseDto);
+
+        System.out.println("customerId: " + loginResponseDto.getCustomerId());
+        System.out.println("token: " + loginResponseDto.getToken());
     }
 }

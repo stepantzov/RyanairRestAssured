@@ -8,14 +8,10 @@ import io.restassured.http.ContentType;
 import static io.restassured.RestAssured.given;
 
 public class LoginRequest {
-    public static LoginResponseDto getResponseDto() {
-        LoginRequestDto loginBodyDto = new LoginRequestDto()
-                .withUsername("zyclonc@gmail.com")
-                .withPassword("123ZZror");
-
+    public static LoginResponseDto getResponseDto(LoginRequestDto loginBodyDto) {
         return given()
                 .contentType(ContentType.URLENC)
-                .formParams(loginBodyDto.convertToMap(loginBodyDto))
+                .formParams(loginBodyDto.convertToMap())
                 .when()
                 .post(PropertiesReader.getPropertyByName("login.url.base"))
                 .then()

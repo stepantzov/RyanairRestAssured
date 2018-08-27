@@ -1,5 +1,9 @@
 package auto.ryanair.dto.request;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.util.Map;
+
 public class AvailabilityRequestDto {
     private int adt;
     private int chd;
@@ -14,7 +18,6 @@ public class AvailabilityRequestDto {
     private String toUs;
     private String exists;
     private String promoCode;
-
 
     public AvailabilityRequestDto() {
         this.adt = 1;
@@ -104,5 +107,13 @@ public class AvailabilityRequestDto {
     public AvailabilityRequestDto withOrigin(String origin) {
         this.origin = origin;
         return this;
+    }
+
+
+    public Map convertToMap() {
+        ObjectMapper mapper = new ObjectMapper();
+        Map parametersMap = mapper.convertValue(this, Map.class);
+
+        return parametersMap;
     }
 }

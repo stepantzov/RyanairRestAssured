@@ -15,11 +15,10 @@ public class LoginRequestDto {
         this.rememberme = "false";
     }
 
-    public Map<String, Object> convertToMap(LoginRequestDto loginRequestDto) {
+    public Map<String, Object> convertToMap() {
         ObjectMapper oMapper = new ObjectMapper();
-        Map<String, Object> loginDataMap = oMapper.convertValue(loginRequestDto, Map.class);
 
-        return loginDataMap;
+        return oMapper.convertValue(this, Map.class);
     }
 
     public String getPassword() {

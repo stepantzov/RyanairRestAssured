@@ -16,7 +16,6 @@ import java.util.Map;
         "hasPromoDiscount"
 })
 public class Fare {
-
     @JsonProperty("type")
     private String type;
     @JsonProperty("amount")

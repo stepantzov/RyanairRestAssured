@@ -7,7 +7,7 @@ import io.restassured.http.ContentType;
 import static io.restassured.RestAssured.given;
 
 public class PriceRequest {
-    public static PriceResponseDto getResponse(Object jsonBody) {
+    public static PriceResponseDto getResponseDto(String jsonBody) {
         return given()
                 .contentType(ContentType.JSON)
                 .body(jsonBody)

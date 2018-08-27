@@ -19,6 +19,7 @@ public class PropertiesReader {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return propertyValue;
     }
 }

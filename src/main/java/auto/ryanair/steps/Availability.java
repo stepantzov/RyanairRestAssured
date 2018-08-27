@@ -1,29 +1,20 @@
 package auto.ryanair.steps;
 
 import auto.ryanair.dto.request.AvailabilityRequestDto;
-import auto.ryanair.dto.response.OutboundDatesResponseDto;
+import auto.ryanair.dto.response.SearchResponseDto;
 import auto.ryanair.dto.response.avaliabilityResponseDto.AvailabilityResponseDto;
 import auto.ryanair.requests.AvailabilityRequest;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.util.Map;
 
 public class Availability {
-    private static ObjectMapper oMapper = new ObjectMapper();
-
-    public static AvailabilityRequestDto getRequestDto(OutboundDatesResponseDto outboundDatesResponse) {
-        AvailabilityRequestDto availabilityRequestDto = new AvailabilityRequestDto();
-        availabilityRequestDto
+    static AvailabilityRequestDto getRequestDto(SearchResponseDto searchResponseDto) {
+        return new AvailabilityRequestDto()
                 .withDestination("DUB")
                 .withOrigin("LGW")
-                .withDateOut(outboundDatesResponse.getOutboundDates().get(0));
-
-        return availabilityRequestDto;
+                .withDateOut(searchResponseDto.getOutboundDates().get(0));
     }
 
-    public static AvailabilityResponseDto getResponse(OutboundDatesResponseDto outboundDatesResponseDto) {
-        //TODO: change outboundDatesResponseDto to return Map;
-        return AvailabilityRequest.getResponseDto(oMapper.convertValue(getRequestDto(outboundDatesResponseDto), Map.class));
+    public static AvailabilityResponseDto getResponse(SearchResponseDto searchResponseDto) {
+        return AvailabilityRequest.getResponseDto(getRequestDto(searchResponseDto).convertToMap());
     }
 
     public static void printFlightDetails(AvailabilityResponseDto availabilityResponseDto) {
@@ -33,7 +24,7 @@ public class Availability {
         System.out.println("outboundFlightKey: " + getFlightKey(availabilityResponseDto));
     }
 
-    public static String getFlightPrice(AvailabilityResponseDto availabilityResponseDto) {
+    static String getFlightPrice(AvailabilityResponseDto availabilityResponseDto) {
         return availabilityResponseDto
                 .getTrips().get(0)
                 .getDates().get(0)
@@ -43,7 +34,7 @@ public class Availability {
                 .getAmount().toString();
     }
 
-    public static String getFlightNumber(AvailabilityResponseDto availabilityResponseDto) {
+    static String getFlightNumber(AvailabilityResponseDto availabilityResponseDto) {
         return availabilityResponseDto
                 .getTrips().get(0)
                 .getDates().get(0)
@@ -69,6 +60,9 @@ public class Availability {
     }
 
     public static String getDateOut(AvailabilityResponseDto availabilityResponseDto) {
-        return availabilityResponseDto.getTrips().get(0).getDates().get(0).getDateOut();
+        return availabilityResponseDto
+                .getTrips().get(0)
+                .getDates().get(0)
+                .getDateOut();
     }
 }

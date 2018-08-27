@@ -14,6 +14,7 @@ public class LoggedInUserRequest {
                 .when()
                 .get(PropertiesReader.getPropertyByName("loggedIn.url.base"))
                 .then()
+                .statusCode(200)
                 .extract()
                 .response();
     }

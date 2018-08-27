@@ -25,7 +25,7 @@ public class PathParameters {
             "&exists={exists}" +
             "&promoCode={promoCode}";
 
-    public static final String fareOptionsParams =
+    public static final String flightOptionsParams =
             "FareOptions?" +
             "AdultsCount={adultsCount}" +
             "&ChildrenCount={childrenCount}" +

@@ -1,25 +1,25 @@
 package auto.ryanair.steps;
 
-import auto.ryanair.dto.request.OutboundDatesRequestDto;
-import auto.ryanair.dto.response.OutboundDatesResponseDto;
-import auto.ryanair.requests.OutboundDatesRequest;
-import auto.ryanair.response.OutboundDatesResponseParser;
+import auto.ryanair.dto.request.SearchRequestDto;
+import auto.ryanair.dto.response.SearchResponseDto;
+import auto.ryanair.requests.SearchRequest;
 import auto.ryanair.utils.TimeStamp;
 
 public class Search {
-    static OutboundDatesRequestDto outboundDatesRequestDto = new OutboundDatesRequestDto()
+    private static SearchRequestDto searchRequestDto = new SearchRequestDto()
             .withOrigin("LGW")
             .withDestination("DUB")
             .withStartDate(TimeStamp.getTimeStampFormatted());
 
-    public static OutboundDatesResponseDto getResponseDto() {
-        return OutboundDatesRequest.getOutboundDatesResponse(outboundDatesRequestDto);
+    public static SearchResponseDto getResponseDto() {
+        return SearchRequest.getResponseDto(searchRequestDto);
     }
 
-    public static void printFlightDate(OutboundDatesResponseDto outboundDatesResponseDto) {
-        OutboundDatesResponseParser.printFirstAvailableFlightDate(
-                outboundDatesRequestDto.getOrigin(),
-                outboundDatesRequestDto.getDestination(),
-                outboundDatesResponseDto.getOutboundDates().get(0));
+    public static void printFlightDate(SearchResponseDto searchResponseDto) {
+        System.out.format("Available flight date for flight %s - %s is: %s\n",
+                searchRequestDto.getOrigin(),
+                searchRequestDto.getDestination(),
+                searchResponseDto.getOutboundDates().get(0));
+
     }
 }

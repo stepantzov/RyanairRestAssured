@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Map;
 
-public class OutboundDatesRequestDto {
+public class SearchRequestDto {
     private String destination;
     private String includeConnectingFlights;
     private String isTwoWay;
@@ -13,7 +13,7 @@ public class OutboundDatesRequestDto {
     private String origin;
     private String startDate;
 
-    public OutboundDatesRequestDto() {
+    public SearchRequestDto() {
         this.includeConnectingFlights = "false";
         this.isTwoWay = "false";
         this.months = "17";
@@ -44,39 +44,39 @@ public class OutboundDatesRequestDto {
         return startDate;
     }
 
-    public OutboundDatesRequestDto withDestination(String destination) {
+    public SearchRequestDto withDestination(String destination) {
         this.destination = destination;
         return this;
     }
 
-    public OutboundDatesRequestDto withIncludeConnectingFlights(String includeConnectingFlights) {
+    public SearchRequestDto withIncludeConnectingFlights(String includeConnectingFlights) {
         this.includeConnectingFlights = includeConnectingFlights;
         return this;
     }
 
-    public OutboundDatesRequestDto withIsTwoWay(String isTwoWay) {
+    public SearchRequestDto withIsTwoWay(String isTwoWay) {
         this.isTwoWay = isTwoWay;
         return this;
     }
 
-    public OutboundDatesRequestDto withMonths(String months) {
+    public SearchRequestDto withMonths(String months) {
         this.months = months;
         return this;
     }
 
-    public OutboundDatesRequestDto withOrigin(String origin) {
+    public SearchRequestDto withOrigin(String origin) {
         this.origin = origin;
         return this;
     }
 
-    public OutboundDatesRequestDto withStartDate(String startDate) {
+    public SearchRequestDto withStartDate(String startDate) {
         this.startDate = startDate;
         return this;
     }
 
-    public Map<String, Object> convertToMap(OutboundDatesRequestDto outboundDatesRequestDto) {
+    public Map<String, Object> convertToMap() {
         ObjectMapper oMapper = new ObjectMapper();
-        Map<String, Object> outboundDatesRequestMap = oMapper.convertValue(outboundDatesRequestDto, Map.class);
+        Map<String, Object> outboundDatesRequestMap = oMapper.convertValue(this, Map.class);
 
         return outboundDatesRequestMap;
     }

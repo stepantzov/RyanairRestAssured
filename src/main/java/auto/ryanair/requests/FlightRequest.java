@@ -11,11 +11,10 @@ public class FlightRequest {
         return given()
                 .contentType(ContentType.JSON)
                 .body(flightRequestDto)
-                .expect()
-                .statusCode(200)
                 .when()
                 .post(PropertiesReader.getPropertyByName("flight.url.base"))
                 .then()
+                .statusCode(200)
                 .contentType(ContentType.JSON)
                 .extract()
                 .as(FlightResponseDto.class);

@@ -1,20 +1,20 @@
-package auto.ryanair.steps;
+package auto.ryanair.actions.availability;
 
 import auto.ryanair.dto.request.AvailabilityRequestDto;
-import auto.ryanair.dto.response.SearchResponseDto;
+import auto.ryanair.dto.response.CalendarResponseDto;
 import auto.ryanair.dto.response.avaliabilityResponseDto.AvailabilityResponseDto;
 import auto.ryanair.requests.AvailabilityRequest;
 
 public class Availability {
-    static AvailabilityRequestDto getRequestDto(SearchResponseDto searchResponseDto) {
+    static AvailabilityRequestDto getRequestDto(CalendarResponseDto calendarResponseDto) {
         return new AvailabilityRequestDto()
                 .withDestination("DUB")
                 .withOrigin("LGW")
-                .withDateOut(searchResponseDto.getOutboundDates().get(0));
+                .withDateOut(calendarResponseDto.getOutboundDates().get(0));
     }
 
-    public static AvailabilityResponseDto getResponse(SearchResponseDto searchResponseDto) {
-        return AvailabilityRequest.getResponseDto(getRequestDto(searchResponseDto).convertToMap());
+    public static AvailabilityResponseDto getResponse(CalendarResponseDto calendarResponseDto) {
+        return AvailabilityRequest.getResponseDto(getRequestDto(calendarResponseDto).convertToMap());
     }
 
     public static void printFlightDetails(AvailabilityResponseDto availabilityResponseDto) {

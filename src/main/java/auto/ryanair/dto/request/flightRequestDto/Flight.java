@@ -1,6 +1,8 @@
 package auto.ryanair.dto.request.flightRequestDto;
 
-public class Flight {
+import auto.ryanair.dto.request.FlightDto;
+
+public class Flight implements FlightDto {
     private String flightKey;
     private String fareKey;
     private Boolean promoDiscount;
@@ -35,5 +37,25 @@ public class Flight {
 
     public void setFareKey(String fareKey) {
         this.fareKey = fareKey;
+    }
+
+    @Override
+    public Boolean getPromoDiscount() {
+        return promoDiscount;
+    }
+
+    @Override
+    public void setPromoDiscount(Boolean promoDiscount) {
+        this.promoDiscount = promoDiscount;
+    }
+
+    @Override
+    public String getFareOption() {
+        return fareOption;
+    }
+
+    @Override
+    public void setFareOption(String fareOption) {
+        this.fareOption = fareOption;
     }
 }

@@ -1,11 +1,11 @@
 package auto.ryanair.dto.request;
 
-import auto.ryanair.utils.TimeStamp;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Map;
 
-public class SearchRequestDto {
+public class SearchRequestDto implements RequestDto {
+    private static ObjectMapper oMapper = new ObjectMapper();
     private String destination;
     private String includeConnectingFlights;
     private String isTwoWay;
@@ -17,7 +17,6 @@ public class SearchRequestDto {
         this.includeConnectingFlights = "false";
         this.isTwoWay = "false";
         this.months = "17";
-        this.startDate = TimeStamp.getTimeStampFormatted();
     }
 
     public String getDestination() {
@@ -75,9 +74,6 @@ public class SearchRequestDto {
     }
 
     public Map<String, Object> convertToMap() {
-        ObjectMapper oMapper = new ObjectMapper();
-        Map<String, Object> outboundDatesRequestMap = oMapper.convertValue(this, Map.class);
-
-        return outboundDatesRequestMap;
+        return oMapper.convertValue(this, Map.class);
     }
 }

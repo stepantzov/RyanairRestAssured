@@ -1,8 +1,8 @@
-package auto.ryanair.steps;
+package auto.ryanair.actions.search;
 
 import auto.ryanair.dto.request.SearchRequestDto;
-import auto.ryanair.dto.response.SearchResponseDto;
-import auto.ryanair.requests.SearchRequest;
+import auto.ryanair.dto.response.CalendarResponseDto;
+import auto.ryanair.requests.CalendarRequest;
 import auto.ryanair.utils.TimeStamp;
 
 public class Search {
@@ -11,15 +11,15 @@ public class Search {
             .withDestination("DUB")
             .withStartDate(TimeStamp.getTimeStampFormatted());
 
-    public static SearchResponseDto getResponseDto() {
-        return SearchRequest.getResponseDto(searchRequestDto);
+    public static CalendarResponseDto getResponseDto() {
+        return CalendarRequest.getResponseDto(searchRequestDto.convertToMap());
     }
 
-    public static void printFlightDate(SearchResponseDto searchResponseDto) {
+    public static void printFlightDate(CalendarResponseDto calendarResponseDto) {
         System.out.format("Available flight date for flight %s - %s is: %s\n",
                 searchRequestDto.getOrigin(),
                 searchRequestDto.getDestination(),
-                searchResponseDto.getOutboundDates().get(0));
+                calendarResponseDto.getOutboundDates().get(0));
 
     }
 }

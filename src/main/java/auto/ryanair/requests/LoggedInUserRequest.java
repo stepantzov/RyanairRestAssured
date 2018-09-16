@@ -1,21 +1,16 @@
 package auto.ryanair.requests;
 
-import auto.ryanair.utils.PropertiesReader;
-import io.restassured.http.ContentType;
+import auto.ryanair.utils.Properties;
 import io.restassured.response.Response;
 
-import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.basePath;
 
 public class LoggedInUserRequest {
-    public static Response extractStatusCode(String xAuthTokenHeader) {
-        return given()
-                .contentType(ContentType.JSON)
-                .header("X-AUTH-TOKEN", xAuthTokenHeader)
-                .when()
-                .get(PropertiesReader.getPropertyByName("loggedIn.url.base"))
-                .then()
-                .statusCode(200)
-                .extract()
-                .response();
+    private static final String loginPath = "/userprofile/v2/loggedin";
+
+    public static Response extractResponse(String xAuthTokenHeader) {
+        basePath = Properties.get("api.base.url").concat(loginPath);
+
+        return Request.withHeader("X-AUTH-TOKEN", xAuthTokenHeader, basePath);
     }
 }

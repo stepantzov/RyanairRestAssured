@@ -12,7 +12,6 @@ import java.util.Map;
         "fares"
 })
 public class RegularFare {
-
     @JsonProperty("fareKey")
     private String fareKey;
     @JsonProperty("fareClass")
@@ -20,7 +19,7 @@ public class RegularFare {
     @JsonProperty("fares")
     private List<Fare> fares = null;
     @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     @JsonProperty("fareKey")
     public String getFareKey() {
@@ -61,5 +60,4 @@ public class RegularFare {
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
-
 }

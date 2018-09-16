@@ -17,7 +17,6 @@ import java.util.Map;
         "duration"
 })
 public class Segment {
-
     @JsonProperty("segmentNr")
     private Integer segmentNr;
     @JsonProperty("origin")
@@ -33,7 +32,7 @@ public class Segment {
     @JsonProperty("duration")
     private String duration;
     @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     @JsonProperty("segmentNr")
     public Integer getSegmentNr() {

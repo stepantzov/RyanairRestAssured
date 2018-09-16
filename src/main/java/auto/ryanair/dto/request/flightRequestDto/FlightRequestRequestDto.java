@@ -1,10 +1,12 @@
 package auto.ryanair.dto.request.flightRequestDto;
 
+import auto.ryanair.dto.request.RequestDto;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class FlightRequestDto {
+public class FlightRequestRequestDto implements RequestDto {
     private String inf;
     private String chd;
     private String adt;
@@ -12,7 +14,7 @@ public class FlightRequestDto {
     private String disc;
     private List<Flight> flights = null;
 
-    public FlightRequestDto() {
+    public FlightRequestRequestDto() {
         this.inf = "0";
         this.chd = "0";
         this.adt = "1";
@@ -24,15 +26,10 @@ public class FlightRequestDto {
         return flights;
     }
 
-    public void setFlights(List<Flight> flights) {
-        this.flights = flights;
-    }
-
-    public FlightRequestDto withFlights(String fareKey, String flightKey) {
-        List<Flight> flightList = new ArrayList<>(Arrays.asList(new Flight()
+    public FlightRequestRequestDto withFlights(String fareKey, String flightKey) {
+        this.flights = new ArrayList<>(Arrays.asList(new Flight()
                 .withFareKey(fareKey)
                 .withFlightKey(flightKey)));
-        this.flights = flightList;
 
         return this;
     }

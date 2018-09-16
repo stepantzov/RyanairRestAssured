@@ -31,7 +31,6 @@ import java.util.Map;
         "arriveUTC"
 })
 public class Journey {
-
     @JsonProperty("journeyNum")
     private Integer journeyNum;
     @JsonProperty("duration")
@@ -75,7 +74,7 @@ public class Journey {
     @JsonProperty("arriveUTC")
     private String arriveUTC;
     @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     @JsonProperty("journeyNum")
     public Integer getJourneyNum() {

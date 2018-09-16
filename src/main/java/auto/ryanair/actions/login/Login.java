@@ -1,4 +1,4 @@
-package auto.ryanair.steps;
+package auto.ryanair.actions.login;
 
 import auto.ryanair.dto.request.LoginRequestDto;
 import auto.ryanair.dto.response.LoginResponseDto;
@@ -17,10 +17,7 @@ public class Login {
     }
 
     public static void printCredentialsFromResponse(LoginResponseDto responseDto) {
-        LoginResponseDto loginResponseDto = new LoginResponseDto();
-        loginResponseDto.build(responseDto);
-
-        System.out.println("customerId: " + loginResponseDto.getCustomerId());
-        System.out.println("token: " + loginResponseDto.getToken());
+        System.out.println("customerId: " + responseDto.getCustomerId());
+        System.out.println("token: " + responseDto.getToken());
     }
 }

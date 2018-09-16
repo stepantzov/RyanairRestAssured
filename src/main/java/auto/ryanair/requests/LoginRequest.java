@@ -2,23 +2,25 @@ package auto.ryanair.requests;
 
 import auto.ryanair.dto.request.LoginRequestDto;
 import auto.ryanair.dto.response.LoginResponseDto;
-import auto.ryanair.utils.PropertiesReader;
-import io.restassured.http.ContentType;
+import auto.ryanair.utils.Properties;
 
+import static io.restassured.RestAssured.basePath;
 import static io.restassured.RestAssured.given;
 
 public class LoginRequest {
+    private static final String loginPath = "/userprofile/rest/api/v1/login";
+
     public static LoginResponseDto getResponseDto(LoginRequestDto loginBodyDto) {
+        basePath = Properties.get("api.base.url").concat(loginPath);
+
         return given()
-                .contentType(ContentType.URLENC)
                 .formParams(loginBodyDto.convertToMap())
                 .when()
-                .post(PropertiesReader.getPropertyByName("login.url.base"))
+                .post(basePath)
                 .then()
                 .statusCode(200)
-                .contentType(ContentType.JSON)
                 .extract()
-                .body()
+                .response()
                 .as(LoginResponseDto.class);
     }
 }

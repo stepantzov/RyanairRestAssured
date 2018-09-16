@@ -31,7 +31,7 @@ public class Fare {
     @JsonProperty("hasPromoDiscount")
     private Boolean hasPromoDiscount;
     @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     @JsonProperty("type")
     public String getType() {
@@ -112,5 +112,4 @@ public class Fare {
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
-
 }

@@ -12,13 +12,12 @@ import java.util.Map;
         "flights"
 })
 public class Date {
-
     @JsonProperty("dateOut")
     private String dateOut;
     @JsonProperty("flights")
     private List<Flight> flights = null;
     @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     @JsonProperty("dateOut")
     public String getDateOut() {
@@ -49,5 +48,4 @@ public class Date {
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
-
 }

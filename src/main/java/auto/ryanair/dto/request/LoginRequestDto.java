@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Map;
 
-public class LoginRequestDto {
+public class LoginRequestDto implements RequestDto {
     private String username;
     private String password;
     private String rememberme;

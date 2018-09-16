@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Map;
 
-public class FlightOptionsRequestDto {
+public class FlightOptionsRequestDto implements RequestDto{
     private static ObjectMapper oMapper = new ObjectMapper();
     private String adultsCount;
     private String childrenCount;
@@ -20,9 +20,8 @@ public class FlightOptionsRequestDto {
         this.teensCount = "0";
     }
 
-    public Map<String, Object> getParametersMap(FlightOptionsRequestDto flightOptionsRequestDto) {
-
-        return oMapper.convertValue(flightOptionsRequestDto, Map.class);
+    public Map convertToMap() {
+        return oMapper.convertValue(this, Map.class);
     }
 
     public String getAdultsCount() {

@@ -4,7 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Map;
 
-public class AvailabilityRequestDto {
+public class AvailabilityRequestDto implements RequestDto {
+    private static ObjectMapper oMapper = new ObjectMapper();
     private int adt;
     private int chd;
     private String dateOut;
@@ -109,11 +110,7 @@ public class AvailabilityRequestDto {
         return this;
     }
 
-
     public Map convertToMap() {
-        ObjectMapper mapper = new ObjectMapper();
-        Map parametersMap = mapper.convertValue(this, Map.class);
-
-        return parametersMap;
+        return oMapper.convertValue(this, Map.class);
     }
 }

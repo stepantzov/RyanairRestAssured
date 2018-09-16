@@ -1,9 +1,15 @@
 package auto.ryanair;
 
+import auto.ryanair.actions.availability.Availability;
+import auto.ryanair.actions.flight.Flight;
+import auto.ryanair.actions.flightOptions.FlightOptions;
+import auto.ryanair.actions.loggedUser.LoggedUser;
+import auto.ryanair.actions.login.Login;
+import auto.ryanair.actions.price.Price;
+import auto.ryanair.actions.search.Search;
 import auto.ryanair.dto.response.LoginResponseDto;
-import auto.ryanair.dto.response.SearchResponseDto;
+import auto.ryanair.dto.response.CalendarResponseDto;
 import auto.ryanair.dto.response.avaliabilityResponseDto.AvailabilityResponseDto;
-import auto.ryanair.steps.*;
 import org.junit.Test;
 
 public class RyanairBookingApiTest {
@@ -12,15 +18,15 @@ public class RyanairBookingApiTest {
         LoginResponseDto loginResponseDto = Login.getResponse();
         LoggedUser.getResponse(loginResponseDto);
 
-        SearchResponseDto searchResponseDto = Search.getResponseDto();
-        Search.printFlightDate(searchResponseDto);
+        CalendarResponseDto calendarResponseDto = Search.getResponseDto();
+        Search.printFlightDate(calendarResponseDto);
 
-        AvailabilityResponseDto availabilityResponseDto = Availability.getResponse(searchResponseDto);
+        AvailabilityResponseDto availabilityResponseDto = Availability.getResponse(calendarResponseDto);
         Availability.printFlightDetails(availabilityResponseDto);
 
         FlightOptions.getResponse(availabilityResponseDto);
 
-        Price.getResponse(availabilityResponseDto, searchResponseDto);
+        Price.getResponse(availabilityResponseDto);
 
         Flight.getResponse(Availability.getFlightKey(availabilityResponseDto),
                 Availability.getFlightFareKey(availabilityResponseDto));

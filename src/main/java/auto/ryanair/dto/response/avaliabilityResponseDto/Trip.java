@@ -15,7 +15,6 @@ import java.util.Map;
         "dates"
 })
 public class Trip {
-
     @JsonProperty("origin")
     private String origin;
     @JsonProperty("originName")
@@ -27,7 +26,7 @@ public class Trip {
     @JsonProperty("dates")
     private List<Date> dates = null;
     @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     @JsonProperty("origin")
     public String getOrigin() {

@@ -1,8 +1,8 @@
 package auto.ryanair.actions.availability;
 
-import auto.ryanair.dto.request.AvailabilityRequestDto;
-import auto.ryanair.dto.response.CalendarResponseDto;
-import auto.ryanair.dto.response.avaliabilityResponseDto.AvailabilityResponseDto;
+import auto.ryanair.actions.availability.dto.request.AvailabilityRequestDto;
+import auto.ryanair.actions.availability.dto.response.AvailabilityResponseDto;
+import auto.ryanair.actions.search.dto.response.CalendarResponseDto;
 import auto.ryanair.requests.AvailabilityRequest;
 
 public class Availability {

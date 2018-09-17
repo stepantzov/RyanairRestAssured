@@ -1,7 +1,7 @@
 package auto.ryanair.requests;
 
-import auto.ryanair.dto.request.PriceRequestDto.PriceRequestRequestDto;
-import auto.ryanair.dto.response.priceResponseDto.PriceResponseDto;
+import auto.ryanair.actions.price.dto.request.PriceRequestRequestDto;
+import auto.ryanair.actions.price.dto.response.PriceResponseDto;
 import auto.ryanair.utils.Properties;
 import io.restassured.http.ContentType;
 import io.restassured.mapper.ObjectMapperType;

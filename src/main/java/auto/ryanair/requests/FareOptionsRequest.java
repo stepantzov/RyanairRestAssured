@@ -1,6 +1,6 @@
 package auto.ryanair.requests;
 
-import auto.ryanair.dto.response.flightOptionsResponseDto.FareOptionsResponseDto;
+import auto.ryanair.actions.fareOptions.dto.response.FareOptionsResponseDto;
 import auto.ryanair.pathParams.PathParameters;
 import auto.ryanair.utils.Properties;
 

@@ -1,7 +1,7 @@
 package auto.ryanair.requests;
 
-import auto.ryanair.dto.request.LoginRequestDto;
-import auto.ryanair.dto.response.LoginResponseDto;
+import auto.ryanair.actions.login.dto.request.LoginRequestDto;
+import auto.ryanair.actions.login.dto.response.LoginResponseDto;
 import auto.ryanair.utils.Properties;
 
 import static io.restassured.RestAssured.basePath;

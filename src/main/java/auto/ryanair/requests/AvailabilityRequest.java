@@ -1,6 +1,6 @@
 package auto.ryanair.requests;
 
-import auto.ryanair.dto.response.avaliabilityResponseDto.AvailabilityResponseDto;
+import auto.ryanair.actions.availability.dto.response.AvailabilityResponseDto;
 import auto.ryanair.pathParams.PathParameters;
 import auto.ryanair.utils.Properties;
 

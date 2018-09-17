@@ -1,9 +1,9 @@
 package auto.ryanair.actions.price;
 
 import auto.ryanair.actions.availability.Availability;
-import auto.ryanair.dto.request.PriceRequestDto.PriceRequestRequestDto;
-import auto.ryanair.dto.response.avaliabilityResponseDto.AvailabilityResponseDto;
-import auto.ryanair.dto.response.priceResponseDto.PriceResponseDto;
+import auto.ryanair.actions.price.dto.request.PriceRequestRequestDto;
+import auto.ryanair.actions.availability.dto.response.AvailabilityResponseDto;
+import auto.ryanair.actions.price.dto.response.PriceResponseDto;
 import auto.ryanair.requests.PriceRequest;
 
 public class Price {

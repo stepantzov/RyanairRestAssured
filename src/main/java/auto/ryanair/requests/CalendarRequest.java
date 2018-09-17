@@ -1,6 +1,6 @@
 package auto.ryanair.requests;
 
-import auto.ryanair.dto.response.CalendarResponseDto;
+import auto.ryanair.actions.search.dto.response.CalendarResponseDto;
 import auto.ryanair.pathParams.PathParameters;
 import auto.ryanair.utils.Properties;
 

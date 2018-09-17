@@ -1,7 +1,7 @@
 package auto.ryanair.actions.flight;
 
-import auto.ryanair.dto.request.flightRequestDto.FlightRequestRequestDto;
-import auto.ryanair.dto.response.flightResponseDto.FlightResponseDto;
+import auto.ryanair.actions.flight.dto.request.FlightRequestRequestDto;
+import auto.ryanair.actions.flight.dto.response.FlightResponseDto;
 import auto.ryanair.requests.FlightRequest;
 
 public class Flight {

@@ -1,6 +1,6 @@
 package auto.ryanair.requests;
 
-import auto.ryanair.dto.request.RequestDto;
+import auto.ryanair.dto.RequestDto;
 import io.restassured.http.ContentType;
 import io.restassured.mapper.ObjectMapperType;
 import io.restassured.response.Response;

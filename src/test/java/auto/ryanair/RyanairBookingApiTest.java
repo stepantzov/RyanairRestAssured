@@ -1,15 +1,15 @@
 package auto.ryanair;
 
-import auto.ryanair.actions.availability.Availability;
-import auto.ryanair.actions.availability.dto.response.AvailabilityResponseDto;
-import auto.ryanair.actions.fareOptions.FareOptions;
-import auto.ryanair.actions.flight.Flight;
-import auto.ryanair.actions.loggedUser.LoggedUser;
-import auto.ryanair.actions.login.Login;
-import auto.ryanair.actions.login.dto.response.LoginResponseDto;
-import auto.ryanair.actions.price.Price;
-import auto.ryanair.actions.search.SearchOnCalendar;
-import auto.ryanair.actions.search.dto.response.CalendarResponseDto;
+import auto.ryanair.requestActions.availability.Availability;
+import auto.ryanair.requestActions.availability.dto.response.AvailabilityResponseDto;
+import auto.ryanair.requestActions.fareOptions.FareOptions;
+import auto.ryanair.requestActions.flight.Flight;
+import auto.ryanair.requestActions.loggedUser.LoggedUser;
+import auto.ryanair.requestActions.login.Login;
+import auto.ryanair.requestActions.login.dto.response.LoginResponseDto;
+import auto.ryanair.requestActions.price.Price;
+import auto.ryanair.requestActions.calendar.SearchOnCalendar;
+import auto.ryanair.requestActions.calendar.dto.response.CalendarResponseDto;
 import org.junit.Test;
 
 public class RyanairBookingApiTest {

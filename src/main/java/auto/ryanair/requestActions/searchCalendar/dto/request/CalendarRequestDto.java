@@ -1,4 +1,4 @@
-package auto.ryanair.requestActions.calendar.dto.request;
+package auto.ryanair.requestActions.searchCalendar.dto.request;
 
 import auto.ryanair.setup.dto.RequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;

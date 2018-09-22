@@ -1,11 +1,11 @@
-package auto.ryanair.requestActions.calendar;
+package auto.ryanair.requestActions.searchCalendar;
 
-import auto.ryanair.requestActions.calendar.dto.request.CalendarRequestDto;
-import auto.ryanair.requestActions.calendar.dto.response.CalendarResponseDto;
-import auto.ryanair.requestActions.calendar.restAssuredRequest.CalendarRequest;
+import auto.ryanair.requestActions.searchCalendar.dto.request.CalendarRequestDto;
+import auto.ryanair.requestActions.searchCalendar.dto.response.CalendarResponseDto;
+import auto.ryanair.requestActions.searchCalendar.restAssuredRequest.CalendarRequest;
 import auto.ryanair.utils.TimeStamp;
 
-public class SearchOnCalendar {
+public class SearchCalendar {
     private static CalendarRequestDto searchRequestDto = new CalendarRequestDto()
             .withOrigin("LGW")
             .withDestination("DUB")

@@ -8,8 +8,8 @@ import auto.ryanair.requestActions.loggedUser.LoggedUser;
 import auto.ryanair.requestActions.login.Login;
 import auto.ryanair.requestActions.login.dto.response.LoginResponseDto;
 import auto.ryanair.requestActions.price.Price;
-import auto.ryanair.requestActions.calendar.SearchOnCalendar;
-import auto.ryanair.requestActions.calendar.dto.response.CalendarResponseDto;
+import auto.ryanair.requestActions.searchCalendar.SearchCalendar;
+import auto.ryanair.requestActions.searchCalendar.dto.response.CalendarResponseDto;
 import org.junit.Test;
 
 public class RyanairBookingApiTest {
@@ -18,8 +18,8 @@ public class RyanairBookingApiTest {
         LoginResponseDto loginResponseDto = Login.getResponse();
         LoggedUser.getResponse(loginResponseDto);
 
-        CalendarResponseDto calendarResponseDto = SearchOnCalendar.getResponseDto();
-        SearchOnCalendar.printFlightDate(calendarResponseDto);
+        CalendarResponseDto calendarResponseDto = SearchCalendar.getResponseDto();
+        SearchCalendar.printFlightDate(calendarResponseDto);
 
         AvailabilityResponseDto availabilityResponseDto = Availability.getResponse(calendarResponseDto);
         Availability.printFlightDetails(availabilityResponseDto);

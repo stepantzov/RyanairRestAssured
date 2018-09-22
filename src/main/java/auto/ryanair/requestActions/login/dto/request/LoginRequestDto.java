@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Map;
 
 public class LoginRequestDto implements RequestDto {
+    private static ObjectMapper oMapper = new ObjectMapper();
     private String username;
     private String password;
     private String rememberme;
@@ -14,12 +15,6 @@ public class LoginRequestDto implements RequestDto {
     public LoginRequestDto() {
         this.policyAgreed = null;
         this.rememberme = "false";
-    }
-
-    public Map<String, Object> convertToMap() {
-        ObjectMapper oMapper = new ObjectMapper();
-
-        return oMapper.convertValue(this, Map.class);
     }
 
     public String getPassword() {
@@ -46,5 +41,9 @@ public class LoginRequestDto implements RequestDto {
     public LoginRequestDto withPassword(String password) {
         this.password = password;
         return this;
+    }
+
+    public Map convertToMap() {
+        return oMapper.convertValue(this, Map.class);
     }
 }

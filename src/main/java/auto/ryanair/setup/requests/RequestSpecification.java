@@ -12,7 +12,7 @@ import static io.restassured.RestAssured.given;
 public class RequestSpecification {
     public static Response withPathParams(Map pathParams, String basePath) {
         return given()
-                .pathParams(pathParams)
+                .params(pathParams)
                 .when()
                 .get(basePath)
                 .then()

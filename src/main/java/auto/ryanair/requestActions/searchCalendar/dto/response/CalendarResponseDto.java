@@ -1,4 +1,4 @@
-package auto.ryanair.requestActions.calendar.dto.response;
+package auto.ryanair.requestActions.searchCalendar.dto.response;
 
 import java.util.ArrayList;
 

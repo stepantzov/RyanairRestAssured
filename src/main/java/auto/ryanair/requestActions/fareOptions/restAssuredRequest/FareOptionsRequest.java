@@ -10,13 +10,13 @@ import static io.restassured.RestAssured.basePath;
 
 public class FareOptionsRequest {
     public static final String pathParameters =
-            "/v4/en-ie/FareOptions?" +
-                    "AdultsCount={adultsCount}" +
+            "/v4/en-ie/FareOptions";
+                   /* "AdultsCount={adultsCount}" +
                     "&ChildrenCount={childrenCount}" +
                     "&InfantCount={infantCount}" +
                     "&TeensCount={teensCount}" +
                     "&outboundFareKey={outboundFareKey}" +
-                    "&outboundFlightKey={outboundFlightKey}";
+                    "&outboundFlightKey={outboundFlightKey}";*/
 
     public static FareOptionsResponseDto[] getResponseDto(Map fareOptionsMap) {
         basePath = Properties.get("base.url").concat(pathParameters);

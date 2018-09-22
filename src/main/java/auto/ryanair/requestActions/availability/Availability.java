@@ -2,7 +2,7 @@ package auto.ryanair.requestActions.availability;
 
 import auto.ryanair.requestActions.availability.dto.request.AvailabilityRequestDto;
 import auto.ryanair.requestActions.availability.dto.response.AvailabilityResponseDto;
-import auto.ryanair.requestActions.calendar.dto.response.CalendarResponseDto;
+import auto.ryanair.requestActions.searchCalendar.dto.response.CalendarResponseDto;
 import auto.ryanair.requestActions.availability.restAssuredRequest.AvailabilityRequest;
 
 public class Availability {

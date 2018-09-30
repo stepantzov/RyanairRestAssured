@@ -61,5 +61,4 @@ public class AvailableFlight {
 
         return (Date) flightDetailsMap.get("dateOut");
     }
-
 }

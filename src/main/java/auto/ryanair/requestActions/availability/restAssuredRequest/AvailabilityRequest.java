@@ -14,6 +14,8 @@ public class AvailabilityRequest {
     public static AvailabilityResponseDto getResponseDto(Map pathParams) {
         basePath = Properties.get("base.url").concat(pathParameters);
 
-        return RequestSpecification.withPathParams(pathParams, basePath).as(AvailabilityResponseDto.class);
+        return RequestSpecification
+                .getWithParams(pathParams, basePath)
+                .as(AvailabilityResponseDto.class);
     }
 }

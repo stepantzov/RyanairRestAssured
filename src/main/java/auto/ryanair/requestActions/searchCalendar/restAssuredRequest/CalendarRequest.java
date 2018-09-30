@@ -14,6 +14,8 @@ public class CalendarRequest {
     public static CalendarResponseDto getResponseDto(Map searchRequestDto) {
         basePath = Properties.get("base.url").concat(pathParameters);
 
-        return RequestSpecification.withPathParams(searchRequestDto, basePath).as(CalendarResponseDto.class);
+        return RequestSpecification
+                .getWithParams(searchRequestDto, basePath)
+                .as(CalendarResponseDto.class);
     }
 }

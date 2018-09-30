@@ -13,6 +13,6 @@ public class FlightRequest {
     public static FlightResponseDto getResponseDto(FlightRequestRequestDto flightRequestDto) {
         basePath = Properties.get("base.url").concat(flightPath);
 
-        return RequestSpecification.withJsonBody(flightRequestDto, basePath).as(FlightResponseDto.class);
+        return RequestSpecification.postWithJsonBody(flightRequestDto, basePath).as(FlightResponseDto.class);
     }
 }

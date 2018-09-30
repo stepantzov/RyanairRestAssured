@@ -9,18 +9,13 @@ import java.util.Map;
 import static io.restassured.RestAssured.basePath;
 
 public class FareOptionsRequest {
-    public static final String pathParameters =
-            "/v4/en-ie/FareOptions";
-                   /* "AdultsCount={adultsCount}" +
-                    "&ChildrenCount={childrenCount}" +
-                    "&InfantCount={infantCount}" +
-                    "&TeensCount={teensCount}" +
-                    "&outboundFareKey={outboundFareKey}" +
-                    "&outboundFlightKey={outboundFlightKey}";*/
+    public static final String pathParameters = "/v4/en-ie/FareOptions";
 
     public static FareOptionsResponseDto[] getResponseDto(Map fareOptionsMap) {
         basePath = Properties.get("base.url").concat(pathParameters);
 
-        return RequestSpecification.withPathParams(fareOptionsMap, basePath).as(FareOptionsResponseDto[].class);
+        return RequestSpecification
+                .getWithParams(fareOptionsMap, basePath)
+                .as(FareOptionsResponseDto[].class);
     }
 }

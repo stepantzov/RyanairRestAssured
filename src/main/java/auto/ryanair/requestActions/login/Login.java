@@ -5,20 +5,21 @@ import auto.ryanair.requestActions.login.dto.response.LoginResponseDto;
 import auto.ryanair.requestActions.login.restAssuredRequest.LoginRequest;
 
 public class Login {
-    public static LoginResponseDto getResponse() {
+    public static void loginWithCredentials(String login, String password){
         LoginResponseDto loginResponse = LoginRequest
                 .getResponseDto(new LoginRequestDto()
-                        .withUsername("zyclonc@gmail.com")
-                        .withPassword("123ZZror")
+                        .withUsername(login)
+                        .withPassword(password)
                         .convertToMap());
 
         printCredentialsFromResponse(loginResponse);
 
-        return loginResponse;
+        LoggedUser.getResponse(loginResponse.getToken());
     }
 
     public static void printCredentialsFromResponse(LoginResponseDto responseDto) {
         System.out.println("customerId: " + responseDto.getCustomerId());
         System.out.println("token: " + responseDto.getToken());
+        System.out.println();
     }
 }

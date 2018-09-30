@@ -1,6 +1,5 @@
 package auto.ryanair.requestActions.flight.dto.request;
 
-
 import auto.ryanair.setup.dto.RequestDto;
 
 import java.util.ArrayList;

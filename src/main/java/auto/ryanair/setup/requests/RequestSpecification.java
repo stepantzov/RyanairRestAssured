@@ -10,7 +10,18 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 
 public class RequestSpecification {
-    public static Response withPathParams(Map pathParams, String basePath) {
+    public static Response postWithParams(Map pathParams, String basePath){
+        return given()
+                .params(pathParams)
+                .when()
+                .post(basePath)
+                .then()
+                .statusCode(200)
+                .extract()
+                .response();
+    }
+
+    public static Response getWithParams(Map pathParams, String basePath) {
         return given()
                 .params(pathParams)
                 .when()
@@ -21,7 +32,7 @@ public class RequestSpecification {
                 .response();
     }
 
-    public static Response withJsonBody(RequestDto requestDto, String basePath) {
+    public static Response postWithJsonBody(RequestDto requestDto, String basePath) {
         return given()
                 .contentType(ContentType.JSON)
                 .body(requestDto, ObjectMapperType.GSON)
@@ -33,7 +44,7 @@ public class RequestSpecification {
                 .response();
     }
 
-    public static Response withHeader(String headerName, String headerValue, String basePath){
+    public static Response getWithHeader(String headerName, String headerValue, String basePath){
         return given()
                 .header(headerName, headerValue)
                 .when()

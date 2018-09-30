@@ -19,7 +19,6 @@ import java.util.Map;
         "duration"
 })
 public class Flight {
-
     @JsonProperty("faresLeft")
     private Integer faresLeft;
     @JsonProperty("flightKey")
